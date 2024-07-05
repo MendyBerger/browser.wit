@@ -1,0 +1,141 @@
+package web:browser;
+
+interface window {
+    resource node {
+        node-type: func() -> u16;
+        node-name: func() -> string;
+        base-uri: func() -> string;
+        is-connected: func() -> bool;
+        owner-document: func() -> option<document>;
+        get-root-node: func(options: option<get-root-node-options>) -> node;
+        parent-node: func() -> option<node>;
+        parent-element: func() -> option<element>;
+        has-child-nodes: func() -> bool;
+        child-nodes: func() -> node-list;
+        first-child: func() -> option<node>;
+        last-child: func() -> option<node>;
+        previous-sibling: func() -> option<node>;
+        next-sibling: func() -> option<node>;
+        node-value: func() -> string;
+        set-node-value: func(node-value: string);
+        text-content: func() -> string;
+        set-text-content: func(text-content: string);
+        insert-before: func(node: borrow<node>, child: option<borrow<node>>) -> node;
+        append-child: func(node: borrow<node>) -> node;
+        replace-child: func(node: borrow<node>, child: borrow<node>) -> node;
+        remove-child: func(child: borrow<node>) -> node;
+        normalize: func();
+        clone-node: func(deep: option<bool>) -> node;
+        is-same-node: func(node: option<borrow<node>>) -> bool;
+        is-equal-node: func(node: option<borrow<node>>) -> bool;
+        compare-document-position: func(other: borrow<node>) -> u16;
+        contains: func(other: option<borrow<node>>) -> bool;
+        lookup-prefix: func(namespace: string) -> string;
+        lookup-namespace-uri: func(prefix: string) -> string;
+        is-default-namespace: func(namespace: string) -> bool;
+    }
+    record get-root-node-options {
+        composed: option<bool>,
+    }
+    resource element {
+        namespace-uri: func() -> string;
+        prefix: func() -> string;
+        local-name: func() -> string;
+        tag-name: func() -> string;
+        id: func() -> string;
+        set-id: func(id: string);
+        class-name: func() -> string;
+        set-class-name: func(class-name: string);
+        class-list: func() -> dom-token-list;
+        attributes: func() -> named-node-map;
+        get-attribute-names: func() -> list<string>;
+        get-attribute: func(name: string) -> string;
+        get-attribute-ns: func(namespace: string, local-name: string) -> string;
+        toggle-attribute: func(name: string, force: option<bool>) -> bool;
+        set-attribute: func(name: string, value: string);
+        set-attribute-ns: func(namespace: string, name: string, value: string);
+        remove-attribute: func(name: string);
+        remove-attribute-ns: func(namespace: string, local-name: string);
+        has-attribute: func(name: string) -> bool;
+        has-attribute-ns: func(namespace: string, local-name: string) -> bool;
+        has-attributes: func() -> bool;
+        closest: func(selector: string) -> option<element>;
+        matches: func(selector: string) -> bool;
+        webkit-matches-selector: func(selector: string) -> bool;
+        get-elements-by-tag-name: func(local-name: string) -> html-collection;
+        get-elements-by-tag-name-ns: func(namespace: string, local-name: string) -> html-collection;
+        get-elements-by-class-name: func(class-names: string) -> html-collection;
+        get-elements-with-grid: func() -> list<element>;
+        insert-adjacent-element: func(where: string, element: borrow<element>) -> option<element>;
+        insert-adjacent-text: func(where: string, data: string);
+        font-size-inflation: func() -> f32;
+        set-pointer-capture: func(pointer-id: s32);
+        release-pointer-capture: func(pointer-id: s32);
+        has-pointer-capture: func(pointer-id: s32) -> bool;
+        set-capture: func(retarget-to-element: option<bool>);
+        release-capture: func();
+        set-capture-always: func(retarget-to-element: option<bool>);
+        get-attribute-node: func(name: string) -> option<attr>;
+        set-attribute-node: func(new-attr: attr) -> option<attr>;
+        remove-attribute-node: func(old-attr: attr) -> option<attr>;
+        get-attribute-node-ns: func(namespace-uri: string, local-name: string) -> option<attr>;
+        set-attribute-node-ns: func(new-attr: attr) -> option<attr>;
+        scroll-by-no-flush: func(dx: s32, dy: s32) -> bool;
+        get-as-flex-container: func() -> option<flex>;
+        get-grid-fragments: func() -> list<grid>;
+        get-transform-to-ancestor: func(ancestor: borrow<element>) -> dom-matrix-read-only;
+        get-transform-to-parent: func() -> dom-matrix-read-only;
+        get-transform-to-viewport: func() -> dom-matrix-read-only;
+        get-client-rects: func() -> dom-rect-list;
+        get-bounding-client-rect: func() -> dom-rect;
+        scroll-into-view: func(arg: bool-or-scroll-into-view-options);
+        scroll-top: func() -> s32;
+        set-scroll-top: func(scroll-top: s32);
+        scroll-left: func() -> s32;
+        set-scroll-left: func(scroll-left: s32);
+        scroll-width: func() -> s32;
+        scroll-height: func() -> s32;
+        scroll: func(x: f64, y: f64);
+        scroll: func(options: option<scroll-to-options>);
+        scroll-to: func(x: f64, y: f64);
+        scroll-to: func(options: option<scroll-to-options>);
+        scroll-by: func(x: f64, y: f64);
+        scroll-by: func(options: option<scroll-to-options>);
+        client-top: func() -> s32;
+        client-left: func() -> s32;
+        client-width: func() -> s32;
+        client-height: func() -> s32;
+        inner-html: func() -> string;
+        set-inner-html: func(inner-html: string);
+        outer-html: func() -> string;
+        set-outer-html: func(outer-html: string);
+        insert-adjacent-html: func(position: string, text: string);
+        query-selector: func(selectors: string) -> option<element>;
+        query-selector-all: func(selectors: string) -> node-list;
+        attach-shadow: func(shadow-root-init-dict: shadow-root-init) -> shadow-root;
+        shadow-root: func() -> option<shadow-root>;
+        open-or-closed-shadow-root: func() -> option<shadow-root>;
+        assigned-slot: func() -> option<html-slot-element>;
+        slot: func() -> string;
+        set-slot: func(slot: string);
+        request-fullscreen: func();
+        request-pointer-lock: func();
+    }
+    enum scroll-logical-position {
+        start,
+        center,
+        end,
+        nearest,
+    }
+    record scroll-into-view-options {
+        block: option<scroll-logical-position>,
+        inline: option<scroll-logical-position>,
+    }
+    variant bool-or-scroll-into-view-options {
+        %bool(bool),
+        scroll-into-view-options(scroll-into-view-options),
+    }
+    record shadow-root-init {
+        mode: shadow-root-mode,
+    }
+}
