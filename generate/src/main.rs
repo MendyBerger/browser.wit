@@ -15,8 +15,7 @@ fn main() {
         webidl_ast,
         webidl2wit::ConversionOptions {
             package_name: PackageName::new("web", "browser", None),
-            interface: Interface::new(Some("window")),
-            // ..Default::default()
+            interface: Interface::new(Some("global")),
         },
     )
     .unwrap();

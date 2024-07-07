@@ -1,6 +1,51 @@
 package web:browser;
 
-interface window {
+interface global {
+    resource html-element {
+        title: func() -> string;
+        set-title: func(title: string);
+        scroll-height: func() -> s32;
+        set-scroll-height: func(scroll-height: s32);
+        scroll-top: func() -> s32;
+        set-scroll-top: func(scroll-top: s32);
+        lang: func() -> string;
+        set-lang: func(lang: string);
+        dir: func() -> string;
+        set-dir: func(dir: string);
+        // dataset: func() -> dom-string-map;
+        inner-text: func() -> string;
+        set-inner-text: func(inner-text: string);
+        hidden: func() -> bool;
+        set-hidden: func(hidden: bool);
+        inert: func() -> bool;
+        set-inert: func(inert: bool);
+        click: func();
+        tab-index: func() -> s32;
+        set-tab-index: func(tab-index: s32);
+        // focus: func(options: option<focus-options>);
+        blur: func();
+        access-key: func() -> string;
+        set-access-key: func(access-key: string);
+        access-key-label: func() -> string;
+        draggable: func() -> bool;
+        set-draggable: func(draggable: bool);
+        content-editable: func() -> string;
+        set-content-editable: func(content-editable: string);
+        is-content-editable: func() -> bool;
+        spellcheck: func() -> bool;
+        set-spellcheck: func(spellcheck: bool);
+        // style: func() -> css-style-declaration;
+        offset-parent: func() -> option<element>;
+        offset-top: func() -> s32;
+        offset-left: func() -> s32;
+        offset-width: func() -> s32;
+        offset-height: func() -> s32;
+
+        // hand written
+        as-element: func() -> element;
+    }
+    resource html-unknown-element {
+    }
     resource node {
         node-type: func() -> u16;
         node-name: func() -> string;
@@ -11,7 +56,7 @@ interface window {
         parent-node: func() -> option<node>;
         parent-element: func() -> option<element>;
         has-child-nodes: func() -> bool;
-        child-nodes: func() -> node-list;
+        // child-nodes: func() -> node-list;
         first-child: func() -> option<node>;
         last-child: func() -> option<node>;
         previous-sibling: func() -> option<node>;
@@ -46,8 +91,8 @@ interface window {
         set-id: func(id: string);
         class-name: func() -> string;
         set-class-name: func(class-name: string);
-        class-list: func() -> dom-token-list;
-        attributes: func() -> named-node-map;
+        // class-list: func() -> dom-token-list;
+        // attributes: func() -> named-node-map;
         get-attribute-names: func() -> list<string>;
         get-attribute: func(name: string) -> string;
         get-attribute-ns: func(namespace: string, local-name: string) -> string;
@@ -62,9 +107,9 @@ interface window {
         closest: func(selector: string) -> option<element>;
         matches: func(selector: string) -> bool;
         webkit-matches-selector: func(selector: string) -> bool;
-        get-elements-by-tag-name: func(local-name: string) -> html-collection;
-        get-elements-by-tag-name-ns: func(namespace: string, local-name: string) -> html-collection;
-        get-elements-by-class-name: func(class-names: string) -> html-collection;
+        // get-elements-by-tag-name: func(local-name: string) -> html-collection;
+        // get-elements-by-tag-name-ns: func(namespace: string, local-name: string) -> html-collection;
+        // get-elements-by-class-name: func(class-names: string) -> html-collection;
         get-elements-with-grid: func() -> list<element>;
         insert-adjacent-element: func(where: string, element: borrow<element>) -> option<element>;
         insert-adjacent-text: func(where: string, data: string);
@@ -75,19 +120,19 @@ interface window {
         set-capture: func(retarget-to-element: option<bool>);
         release-capture: func();
         set-capture-always: func(retarget-to-element: option<bool>);
-        get-attribute-node: func(name: string) -> option<attr>;
-        set-attribute-node: func(new-attr: attr) -> option<attr>;
-        remove-attribute-node: func(old-attr: attr) -> option<attr>;
-        get-attribute-node-ns: func(namespace-uri: string, local-name: string) -> option<attr>;
-        set-attribute-node-ns: func(new-attr: attr) -> option<attr>;
+        // get-attribute-node: func(name: string) -> option<attr>;
+        // set-attribute-node: func(new-attr: attr) -> option<attr>;
+        // remove-attribute-node: func(old-attr: attr) -> option<attr>;
+        // get-attribute-node-ns: func(namespace-uri: string, local-name: string) -> option<attr>;
+        // set-attribute-node-ns: func(new-attr: attr) -> option<attr>;
         scroll-by-no-flush: func(dx: s32, dy: s32) -> bool;
-        get-as-flex-container: func() -> option<flex>;
-        get-grid-fragments: func() -> list<grid>;
-        get-transform-to-ancestor: func(ancestor: borrow<element>) -> dom-matrix-read-only;
-        get-transform-to-parent: func() -> dom-matrix-read-only;
-        get-transform-to-viewport: func() -> dom-matrix-read-only;
-        get-client-rects: func() -> dom-rect-list;
-        get-bounding-client-rect: func() -> dom-rect;
+        // get-as-flex-container: func() -> option<flex>;
+        // get-grid-fragments: func() -> list<grid>;
+        // get-transform-to-ancestor: func(ancestor: borrow<element>) -> dom-matrix-read-only;
+        // get-transform-to-parent: func() -> dom-matrix-read-only;
+        // get-transform-to-viewport: func() -> dom-matrix-read-only;
+        // get-client-rects: func() -> dom-rect-list;
+        // get-bounding-client-rect: func() -> dom-rect;
         scroll-into-view: func(arg: bool-or-scroll-into-view-options);
         scroll-top: func() -> s32;
         set-scroll-top: func(scroll-top: s32);
@@ -96,11 +141,11 @@ interface window {
         scroll-width: func() -> s32;
         scroll-height: func() -> s32;
         scroll: func(x: f64, y: f64);
-        scroll: func(options: option<scroll-to-options>);
+        // scroll: func(options: option<scroll-to-options>);
         scroll-to: func(x: f64, y: f64);
-        scroll-to: func(options: option<scroll-to-options>);
+        // scroll-to: func(options: option<scroll-to-options>);
         scroll-by: func(x: f64, y: f64);
-        scroll-by: func(options: option<scroll-to-options>);
+        // scroll-by: func(options: option<scroll-to-options>);
         client-top: func() -> s32;
         client-left: func() -> s32;
         client-width: func() -> s32;
@@ -111,15 +156,18 @@ interface window {
         set-outer-html: func(outer-html: string);
         insert-adjacent-html: func(position: string, text: string);
         query-selector: func(selectors: string) -> option<element>;
-        query-selector-all: func(selectors: string) -> node-list;
-        attach-shadow: func(shadow-root-init-dict: shadow-root-init) -> shadow-root;
-        shadow-root: func() -> option<shadow-root>;
-        open-or-closed-shadow-root: func() -> option<shadow-root>;
-        assigned-slot: func() -> option<html-slot-element>;
+        // query-selector-all: func(selectors: string) -> node-list;
+        // attach-shadow: func(shadow-root-init-dict: shadow-root-init) -> shadow-root;
+        // shadow-root: func() -> option<shadow-root>;
+        // open-or-closed-shadow-root: func() -> option<shadow-root>;
+        // assigned-slot: func() -> option<html-slot-element>;
         slot: func() -> string;
         set-slot: func(slot: string);
         request-fullscreen: func();
         request-pointer-lock: func();
+
+        // hand written
+        as-node: func() -> node;
     }
     enum scroll-logical-position {
         start,
@@ -135,7 +183,136 @@ interface window {
         %bool(bool),
         scroll-into-view-options(scroll-into-view-options),
     }
-    record shadow-root-init {
-        mode: shadow-root-mode,
+    // record shadow-root-init {
+    //     mode: shadow-root-mode,
+    // }
+    enum visibility-state {
+        hidden,
+        visible,
+    }
+    record element-creation-options {
+        is: option<string>,
+        pseudo: option<string>,
+    }
+    resource document {
+        // implementation: func() -> dom-implementation;
+        url: func() -> string;
+        document-uri: func() -> string;
+        compat-mode: func() -> string;
+        character-set: func() -> string;
+        charset: func() -> string;
+        input-encoding: func() -> string;
+        content-type: func() -> string;
+        // doctype: func() -> option<document-type>;
+        document-element: func() -> option<element>;
+        // get-elements-by-tag-name: func(local-name: string) -> html-collection;
+        // get-elements-by-tag-name-ns: func(namespace: string, local-name: string) -> html-collection;
+        // get-elements-by-class-name: func(class-names: string) -> html-collection;
+        get-element-by-id: func(element-id: string) -> option<element>;
+        create-element: func(local-name: string, options: element-creation-options-or-string) -> element;
+        create-element-ns: func(namespace: string, qualified-name: string, options: element-creation-options-or-string) -> element;
+        // create-document-fragment: func() -> document-fragment;
+        // create-text-node: func(data: string) -> text;
+        // create-comment: func(data: string) -> comment;
+        // create-processing-instruction: func(target: string, data: string) -> processing-instruction;
+        import-node: func(node: borrow<node>, deep: option<bool>) -> node;
+        adopt-node: func(node: borrow<node>) -> node;
+        // create-event: func(%interface: string) -> event;
+        // create-range: func() -> range;
+        // create-node-iterator: func(root: borrow<node>, what-to-show: option<u32>, filter: option<option<node-filter>>) -> node-iterator;
+        // create-tree-walker: func(root: borrow<node>, what-to-show: option<u32>, filter: option<option<node-filter>>) -> tree-walker;
+        // create-cdata-section: func(data: string) -> cdata-section;
+        // create-attribute: func(name: string) -> attr;
+        // create-attribute-ns: func(namespace: string, name: string) -> attr;
+        // location: func() -> option<location>;
+        referrer: func() -> string;
+        last-modified: func() -> string;
+        ready-state: func() -> string;
+        title: func() -> string;
+        set-title: func(title: string);
+        dir: func() -> string;
+        set-dir: func(dir: string);
+        body: func() -> option<html-element>;
+        set-body: func(body: option<html-element>);
+        // head: func() -> option<html-head-element>;
+        // images: func() -> html-collection;
+        // embeds: func() -> html-collection;
+        // plugins: func() -> html-collection;
+        // links: func() -> html-collection;
+        // forms: func() -> html-collection;
+        // scripts: func() -> html-collection;
+        // get-elements-by-name: func(element-name: string) -> node-list;
+        // default-view: func() -> option<window-proxy>;
+        has-focus: func() -> bool;
+        // onreadystatechange: func() -> event-handler;
+        // set-onreadystatechange: func(onreadystatechange: event-handler);
+        // onbeforescriptexecute: func() -> event-handler;
+        // set-onbeforescriptexecute: func(onbeforescriptexecute: event-handler);
+        // onafterscriptexecute: func() -> event-handler;
+        // set-onafterscriptexecute: func(onafterscriptexecute: event-handler);
+        // onselectionchange: func() -> event-handler;
+        // set-onselectionchange: func(onselectionchange: event-handler);
+        current-script: func() -> option<element>;
+        release-capture: func();
+        // document-uri-object: func() -> option<uri>;
+        referrer-policy: func() -> u32;
+        // anchors: func() -> html-collection;
+        // applets: func() -> html-collection;
+        fullscreen: func() -> bool;
+        fullscreen-enabled: func() -> bool;
+        exit-fullscreen: func();
+        // onfullscreenchange: func() -> event-handler;
+        // set-onfullscreenchange: func(onfullscreenchange: event-handler);
+        // onfullscreenerror: func() -> event-handler;
+        // set-onfullscreenerror: func(onfullscreenerror: event-handler);
+        exit-pointer-lock: func();
+        // onpointerlockchange: func() -> event-handler;
+        // set-onpointerlockchange: func(onpointerlockchange: event-handler);
+        // onpointerlockerror: func() -> event-handler;
+        // set-onpointerlockerror: func(onpointerlockerror: event-handler);
+        hidden: func() -> bool;
+        visibility-state: func() -> visibility-state;
+        // onvisibilitychange: func() -> event-handler;
+        // set-onvisibilitychange: func(onvisibilitychange: event-handler);
+        selected-style-sheet-set: func() -> string;
+        set-selected-style-sheet-set: func(selected-style-sheet-set: string);
+        last-style-sheet-set: func() -> string;
+        preferred-style-sheet-set: func() -> string;
+        // style-sheet-sets: func() -> dom-string-list;
+        enable-style-sheets-for-set: func(name: string);
+        // caret-position-from-point: func(x: f32, y: f32) -> option<caret-position>;
+        scrolling-element: func() -> option<element>;
+        query-selector: func(selectors: string) -> option<element>;
+        // query-selector-all: func(selectors: string) -> node-list;
+        // timeline: func() -> document-timeline;
+        // get-animations: func() -> list<animation>;
+        // root-element: func() -> option<svgsvg-element>;
+        is-srcdoc-document: func() -> bool;
+        sandbox-flags-as-string: func() -> string;
+        // insert-anonymous-content: func(a-element: borrow<element>) -> anonymous-content;
+        // remove-anonymous-content: func(a-content: anonymous-content);
+        // get-selection: func() -> option<selection>;
+        user-has-interacted: func() -> bool;
+        notify-user-gesture-activation: func();
+        document-flash-classification: func() -> flash-classification;
+    }
+    variant element-creation-options-or-string {
+        element-creation-options(element-creation-options),
+        %string(string),
+    }
+    record block-parsing-options {
+        block-script-created: option<bool>,
+    }
+    enum flash-classification {
+        unclassified,
+        unknown,
+        allowed,
+        denied,
+    }
+
+    // hand written
+    get-window: func() -> window;
+    resource window {
+        document: func() -> document;
     }
 }

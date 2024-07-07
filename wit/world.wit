@@ -1,0 +1,6 @@
+package web:browser;
+
+world browser {
+    import global;
+    export start: func();
+}
