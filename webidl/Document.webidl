@@ -362,16 +362,6 @@ partial interface Document {
   undefined notifyUserGestureActivation();
 };
 
-// Document includes XPathEvaluator;
-// Document includes GlobalEventHandlers;
-// Document includes DocumentAndElementEventHandlers;
-// Document includes TouchEventHandlers;
-// Document includes ParentNode;
-// Document includes OnErrorEventHandlerForNodes;
-// Document includes GeometryUtils;
-// Document includes FontFaceSource;
-// Document includes DocumentOrShadowRoot;
-
 // For more information on Flash classification, see
 // toolkit/components/url-classifier/flash-block-lists.rst
 enum FlashClassification {
@@ -385,3 +375,13 @@ partial interface Document {
   [ChromeOnly]
   readonly attribute FlashClassification documentFlashClassification;
 };
+
+Document includes XPathEvaluator;
+Document includes GlobalEventHandlers;
+Document includes DocumentAndElementEventHandlers;
+Document includes TouchEventHandlers;
+Document includes ParentNode;
+Document includes OnErrorEventHandlerForNodes;
+Document includes GeometryUtils;
+Document includes FontFaceSource;
+Document includes DocumentOrShadowRoot;

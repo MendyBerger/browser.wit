@@ -97,9 +97,9 @@ interface mixin TouchEventHandlers {
            attribute EventHandler ontouchcancel;
 };
 
-// HTMLElement includes GlobalEventHandlers;
-// HTMLElement includes DocumentAndElementEventHandlers;
-// HTMLElement includes TouchEventHandlers;
-// HTMLElement includes OnErrorEventHandlerForNodes;
+HTMLElement includes GlobalEventHandlers;
+HTMLElement includes DocumentAndElementEventHandlers;
+HTMLElement includes TouchEventHandlers;
+HTMLElement includes OnErrorEventHandlerForNodes;
 
 interface HTMLUnknownElement : HTMLElement {};

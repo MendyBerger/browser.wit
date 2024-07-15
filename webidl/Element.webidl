@@ -246,11 +246,11 @@ partial interface Element {
            attribute DOMString slot;
 };
 
-// Element includes ChildNode;
-// Element includes NonDocumentTypeChildNode;
-// Element includes ParentNode;
-// Element includes Animatable;
-// Element includes GeometryUtils;
+Element includes ChildNode;
+Element includes NonDocumentTypeChildNode;
+Element includes ParentNode;
+Element includes Animatable;
+Element includes GeometryUtils;
 
 // https://fullscreen.spec.whatwg.org/#api
 partial interface Element {
