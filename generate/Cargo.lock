@@ -26,7 +26,6 @@ version = "0.1.0"
 dependencies = [
  "webidl2wit",
  "weedle",
- "wit-encoder",
 ]
 
 [[package]]
@@ -85,7 +84,7 @@ checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
 [[package]]
 name = "webidl2wit"
 version = "0.1.0"
-source = "git+https://github.com/wasi-gfx/webidl2wit.git?rev=9d606461b638570b65fbb2be074a1f038e1104f2#9d606461b638570b65fbb2be074a1f038e1104f2"
+source = "git+https://github.com/wasi-gfx/webidl2wit.git?rev=3ad2deea16d938b506ceea935dbcb133f2305ce6#3ad2deea16d938b506ceea935dbcb133f2305ce6"
 dependencies = [
  "anyhow",
  "heck",
@@ -96,16 +95,17 @@ dependencies = [
 
 [[package]]
 name = "weedle"
-version = "0.12.0"
-source = "git+https://github.com/rustwasm/weedle.git#c704b30c7bb8c041ab4a9a47637378e02192ab6f"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bfde6c0c0dc6d6c8b4f13afc35b46793e5a62890bcafa1a9d4c2c2301fa2f829"
 dependencies = [
  "nom",
 ]
 
 [[package]]
 name = "wit-encoder"
-version = "0.204.0"
-source = "git+https://github.com/MendyBerger/wasm-tools.git?rev=67637756f69937d7f1e29565174fd4a59c4314a5#67637756f69937d7f1e29565174fd4a59c4314a5"
+version = "0.212.0"
+source = "git+https://github.com/bytecodealliance/wasm-tools.git?rev=a265ec17ab8ee9081e9390387eafda7d92107f27#a265ec17ab8ee9081e9390387eafda7d92107f27"
 dependencies = [
  "pretty_assertions",
  "semver",

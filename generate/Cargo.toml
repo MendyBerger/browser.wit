@@ -6,6 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-webidl2wit = { git = "https://github.com/wasi-gfx/webidl2wit.git", rev = "9d606461b638570b65fbb2be074a1f038e1104f2" }
-wit-encoder = { git = "https://github.com/MendyBerger/wasm-tools.git", rev = "67637756f69937d7f1e29565174fd4a59c4314a5" }
-weedle = { git = "https://github.com/rustwasm/weedle.git" }
+webidl2wit = { git = "https://github.com/wasi-gfx/webidl2wit.git", rev = "3ad2deea16d938b506ceea935dbcb133f2305ce6" }
+weedle = "0.13.0"
