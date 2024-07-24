@@ -21,12 +21,156 @@ world window {
 }
 
 interface global {
-  record event-init {  }
-  record gamepad-event-init {  }
-  record ui-event-init {  }
-  record audio-node-options {  }
-  record mouse-event-init {  }
-  record event-modifier-init {  }
+  resource lifecycle-connected-callback {
+  }
+  resource lifecycle-disconnected-callback {
+  }
+  resource lifecycle-adopted-callback {
+  }
+  resource lifecycle-attribute-changed-callback {
+  }
+  resource video-frame {
+  }
+  resource event-handler-non-null {
+  }
+  resource on-before-unload-event-handler-non-null {
+  }
+  resource on-error-event-handler-non-null {
+  }
+  resource tree-column {
+  }
+  resource principal {
+  }
+  resource keyframe-animation-options {
+  }
+  resource console-instance-dump-callback {
+  }
+  resource plugin-tag {
+  }
+  resource uri {
+  }
+  resource generate-assertion-callback {
+  }
+  resource validate-assertion-callback {
+  }
+  resource window-proxy {
+  }
+  resource observer-callback {
+  }
+  resource dom-time-stamp {
+  }
+  resource underlying-source-start-callback {
+  }
+  resource underlying-source-pull-callback {
+  }
+  resource underlying-source-cancel-callback {
+  }
+  resource underlying-sink-start-callback {
+  }
+  resource underlying-sink-write-callback {
+  }
+  resource underlying-sink-close-callback {
+  }
+  resource underlying-sink-abort-callback {
+  }
+  resource transformer-start-callback {
+  }
+  resource transformer-transform-callback {
+  }
+  resource transformer-flush-callback {
+  }
+  resource queuing-strategy-size {
+  }
+  resource function {
+  }
+  resource payment-details-update {
+  }
+  resource notification-permission-callback {
+  }
+  resource mutation-callback {
+  }
+  resource any-callback {
+  }
+  resource u2f-register-callback {
+  }
+  resource u2f-sign-callback {
+  }
+  resource void-function {
+  }
+  resource node-filter {
+  }
+  resource resize-observer-callback {
+  }
+  resource intersection-callback {
+  }
+  resource box-object {
+  }
+  resource tree-columns {
+  }
+  resource ns-i-scriptable-region {
+  }
+  resource position-callback {
+  }
+  resource position-error-callback {
+  }
+  resource ns-i-selection-listener {
+  }
+  resource decode-success-callback {
+  }
+  resource decode-error-callback {
+  }
+  resource file-mode {
+  }
+  resource blob-callback {
+  }
+  resource file-system-entry-callback {
+  }
+  resource error-callback {
+  }
+  resource ns-i-tree-selection {
+  }
+  resource frame-request-callback {
+  }
+  resource application-cache {
+  }
+  resource idle-request-callback {
+  }
+  resource flex {
+  }
+  resource grid {
+  }
+  resource static-range {
+  }
+  resource stack-frame {
+  }
+  resource ns-i-transport-provider {
+  }
+  resource event-listener {
+  }
+  resource date {
+  }
+  resource file-callback {
+  }
+  resource get-notification-options {
+  }
+  resource ns-i-variant {
+  }
+  resource function-string-callback {
+  }
+  resource font-face-set-for-each-callback {
+  }
+  resource custom-element-creation-callback {
+  }
+  resource file-system-entries-callback {
+  }
+  resource img-i-request {
+  }
+  resource rtc-peer-connection-ice-error-event-init {
+  }
+  resource anonymous-content {
+  }
+  resource x-path-ns-resolver {
+  }
   resource presentation-availability {
     as-event-target: func() -> event-target;
     value: func() -> bool;
@@ -382,7 +526,7 @@ interface global {
     report-validity: func() -> bool;
     set-custom-validity: func(error: string);
     labels: func() -> node-list;
-    remove: func(params: html-select-element-remove-params);
+    remove: func(params: option<html-select-element-remove-params>);
     open-in-parent-process: func() -> bool;
     set-open-in-parent-process: func(open-in-parent-process: bool);
     get-autocomplete-info: func() -> autocomplete-info;
@@ -399,7 +543,6 @@ interface global {
   }
   variant html-select-element-remove-params {
     index(s32),
-    (tuple<>),
   }
   resource svg-animation-element {
     as-svg-element: func() -> svg-element;
@@ -424,7 +567,7 @@ interface global {
     as-event-target: func() -> event-target;
     %result: func() -> any;
     error: func() -> option<dom-exception>;
-    source: func() -> idb-cursor-or-idb-index-or-idb-object-store;
+    // source: func() -> idb-cursor-or-idb-index-or-idb-object-store;
     transaction: func() -> option<idb-transaction>;
     ready-state: func() -> idb-request-ready-state;
     onsuccess: func() -> event-handler;
@@ -525,9 +668,13 @@ interface global {
   }
   resource payment-request-update-event {
     as-event: func() -> event;
-    update-with: func(details-promise: payment-details-update);
+    update-with: func(details-promise: borrow<payment-details-update>);
   }
-  record payment-request-update-event-init {  }
+  record payment-request-update-event-init {
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
+  }
   record constrain-long-range {
     min: option<s32>,
     max: option<s32>,
@@ -566,6 +713,9 @@ interface global {
     lineno: option<u32>,
     colno: option<u32>,
     error: any,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum storage-type {
     persistent,
@@ -586,6 +736,9 @@ interface global {
     char-length: option<u32>,
     elapsed-time: option<f32>,
     name: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource svg-linear-gradient-element {
     as-svg-gradient-element: func() -> svg-gradient-element;
@@ -621,7 +774,7 @@ interface global {
     create-object-url: static func(blob: borrow<blob>) -> string;
     revoke-object-url: static func(url: string);
     is-valid-url: static func(url: string) -> bool;
-    create-object-url: static func(source: borrow<media-source>) -> string;
+    // create-object-url: static func(source: borrow<media-source>) -> string;
   }
   resource web-gl-context-event {
     as-event: func() -> event;
@@ -629,6 +782,9 @@ interface global {
   }
   record web-gl-context-event-init {
     status-message: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum speech-recognition-error-code {
     no-speech,
@@ -648,12 +804,15 @@ interface global {
   record speech-recognition-error-init {
     error: option<speech-recognition-error-code>,
     message: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   record lifecycle-callbacks {
-    connected-callback: option<lifecycle-connected-callback>,
-    disconnected-callback: option<lifecycle-disconnected-callback>,
-    adopted-callback: option<lifecycle-adopted-callback>,
-    attribute-changed-callback: option<lifecycle-attribute-changed-callback>,
+    connected-callback: option<borrow<lifecycle-connected-callback>>,
+    disconnected-callback: option<borrow<lifecycle-disconnected-callback>>,
+    adopted-callback: option<borrow<lifecycle-adopted-callback>>,
+    attribute-changed-callback: option<borrow<lifecycle-attribute-changed-callback>>,
   }
   enum canvas-winding-rule {
     nonzero,
@@ -679,7 +838,7 @@ interface global {
     html-video-element(borrow<html-video-element>),
     image-bitmap(borrow<image-bitmap>),
     offscreen-canvas(borrow<offscreen-canvas>),
-    video-frame(video-frame),
+    video-frame(borrow<video-frame>),
   }
   type canvas-image-source = html-canvas-element-or-html-or-svg-image-element-or-html-video-element-or-image-bitmap-or-offscreen-canvas-or-video-frame;
   resource canvas-rendering-context2-d {
@@ -707,9 +866,9 @@ interface global {
     set-global-composite-operation: func(global-composite-operation: string);
     image-smoothing-enabled: func() -> bool;
     set-image-smoothing-enabled: func(image-smoothing-enabled: bool);
-    stroke-style: func() -> canvas-gradient-or-canvas-pattern-or-string;
+    // stroke-style: func() -> canvas-gradient-or-canvas-pattern-or-string;
     set-stroke-style: func(stroke-style: canvas-gradient-or-canvas-pattern-or-string);
-    fill-style: func() -> canvas-gradient-or-canvas-pattern-or-string;
+    // fill-style: func() -> canvas-gradient-or-canvas-pattern-or-string;
     set-fill-style: func(fill-style: canvas-gradient-or-canvas-pattern-or-string);
     create-linear-gradient: func(x0: f64, y0: f64, x1: f64, y1: f64) -> canvas-gradient;
     create-radial-gradient: func(x0: f64, y0: f64, r0: f64, x1: f64, y1: f64, r1: f64) -> canvas-gradient;
@@ -729,7 +888,7 @@ interface global {
     stroke-rect: func(x: f64, y: f64, w: f64, h: f64);
     begin-path: func();
     fill: func(params: canvas-rendering-context2-d-fill-params);
-    stroke: func(params: canvas-rendering-context2-d-stroke-params);
+    stroke: func(params: option<canvas-rendering-context2-d-stroke-params>);
     clip: func(params: canvas-rendering-context2-d-clip-params);
     is-point-in-path: func(params: canvas-rendering-context2-d-is-point-in-path-params) -> bool;
     is-point-in-stroke: func(params: canvas-rendering-context2-d-is-point-in-stroke-params) -> bool;
@@ -788,7 +947,6 @@ interface global {
     path-winding(tuple<borrow<path2-d>, option<canvas-winding-rule>>),
   }
   variant canvas-rendering-context2-d-stroke-params {
-    (tuple<>),
     path(borrow<path2-d>),
   }
   variant canvas-rendering-context2-d-clip-params {
@@ -875,7 +1033,7 @@ interface global {
     as-event-target: func() -> event-target;
     constructor(title: string, options: option<notification-options>);
     permission: static func() -> notification-permission;
-    request-permission: static func(permission-callback: option<notification-permission-callback>) -> notification-permission;
+    request-permission: static func(permission-callback: option<borrow<notification-permission-callback>>) -> notification-permission;
     max-actions: static func() -> u32;
     onclick: func() -> event-handler;
     set-onclick: func(onclick: event-handler);
@@ -1394,6 +1552,9 @@ interface global {
   record promise-rejection-event-init {
     promise: any,
     reason: any,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource audio-worklet {
     as-worklet: func() -> worklet;
@@ -1450,6 +1611,9 @@ interface global {
   record media-query-list-event-init {
     media: option<string>,
     matches: option<bool>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource mutation-record {
     %type: func() -> string;
@@ -1469,7 +1633,7 @@ interface global {
     observe: func(target: borrow<node>, options: option<mutation-observer-init>);
     disconnect: func();
     take-records: func() -> list<mutation-record>;
-    get-observing-info: func() -> list<option<mutation-observing-info>>;
+    // get-observing-info: func() -> list<option<mutation-observing-info>>;
     mutation-callback: func() -> mutation-callback;
     merge-attribute-records: func() -> bool;
     set-merge-attribute-records: func(merge-attribute-records: bool);
@@ -1616,6 +1780,9 @@ interface global {
   }
   record media-recorder-error-event-init {
     error: borrow<dom-exception>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource media-recorder-error-event {
     as-event: func() -> event;
@@ -1658,10 +1825,10 @@ interface global {
     post-message: func(message: string);
     onmessage: func() -> event-handler;
     set-onmessage: func(onmessage: event-handler);
-    set-immediate: func(handler: function);
+    set-immediate: func(handler: borrow<function>);
     report-error: func(message: string);
     retrieve-console-events: func() -> list<any>;
-    set-console-event-handler: func(handler: option<any-callback>);
+    set-console-event-handler: func(handler: option<borrow<any-callback>>);
     dump: func(%string: option<string>);
   }
   resource object {
@@ -1839,8 +2006,8 @@ interface global {
     CONFIGURATION-UNSUPPORTED: static func() -> u16;
     DEVICE-INELIGIBLE: static func() -> u16;
     TIMEOUT: static func() -> u16;
-    register: func(app-id: string, register-requests: list<register-request>, registered-keys: list<registered-key>, callback: u2f-register-callback, opt-timeout-seconds: option<s32>);
-    sign: func(app-id: string, challenge: string, registered-keys: list<registered-key>, callback: u2f-sign-callback, opt-timeout-seconds: option<s32>);
+    register: func(app-id: string, register-requests: list<register-request>, registered-keys: list<registered-key>, callback: borrow<u2f-register-callback>, opt-timeout-seconds: option<s32>);
+    sign: func(app-id: string, challenge: string, registered-keys: list<registered-key>, callback: borrow<u2f-sign-callback>, opt-timeout-seconds: option<s32>);
   }
   record constant-source-options {
     offset: option<f32>,
@@ -1870,7 +2037,7 @@ interface global {
   }
   resource audio-worklet-global-scope {
     as-worklet-global-scope: func() -> worklet-global-scope;
-    register-processor: func(name: string, processor-ctor: void-function);
+    register-processor: func(name: string, processor-ctor: borrow<void-function>);
     current-frame: func() -> u64;
     current-time: func() -> f64;
     sample-rate: func() -> f32;
@@ -1983,6 +2150,9 @@ interface global {
   }
   record pop-state-event-init {
     state: any,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource named-node-map {
     get-named-item: func(name: string) -> option<attr>;
@@ -2098,6 +2268,9 @@ interface global {
     request: borrow<request>,
     client-id: option<string>,
     is-reload: option<bool>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum dom-request-ready-state {
     pending,
@@ -2105,7 +2278,7 @@ interface global {
   }
   resource dom-request {
     as-event-target: func() -> event-target;
-    then: func(fulfill-callback: option<option<any-callback>>, reject-callback: option<option<any-callback>>) -> any;
+    then: func(fulfill-callback: option<option<borrow<any-callback>>>, reject-callback: option<option<borrow<any-callback>>>) -> any;
     fire-detailed-error: func(a-error: borrow<dom-exception>);
     ready-state: func() -> dom-request-ready-state;
     %result: func() -> any;
@@ -2154,6 +2327,9 @@ interface global {
   }
   record rtc-peer-connection-ice-event-init {
     candidate: option<option<borrow<rtc-ice-candidate>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource rtc-peer-connection-ice-event {
     as-event: func() -> event;
@@ -2173,7 +2349,7 @@ interface global {
     fatal: option<bool>,
   }
   record text-decode-options {
-    stream: option<bool>,
+    %stream: option<bool>,
   }
   resource image-capture-error-event {
     as-event: func() -> event;
@@ -2181,6 +2357,9 @@ interface global {
   }
   record image-capture-error-event-init {
     image-capture-error: option<option<borrow<image-capture-error>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource image-capture-error {
     FRAME-GRAB-ERROR: static func() -> u16;
@@ -2571,7 +2750,7 @@ interface global {
     CONTEXT-LOST-WEBGL: static func() -> g-lenum;
     UNPACK-COLORSPACE-CONVERSION-WEBGL: static func() -> g-lenum;
     BROWSER-DEFAULT-WEBGL: static func() -> g-lenum;
-    canvas: func() -> html-canvas-element-or-offscreen-canvas;
+    // canvas: func() -> html-canvas-element-or-offscreen-canvas;
     drawing-buffer-width: func() -> g-lsizei;
     drawing-buffer-height: func() -> g-lsizei;
     get-context-attributes: func() -> option<web-gl-context-attributes>;
@@ -2704,22 +2883,22 @@ interface global {
     target-offset-data(tuple<g-lenum, g-lintptr, array-buffer-view>),
   }
   variant web-gl-rendering-context-tex-image2-d-params {
-    target-level-internalformat-width-height-border-format-%type-pixels(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view>),
-    target-level-internalformat-format-%type-pixels(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-internalformat-format-%type-pixels(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
-    target-level-internalformat-format-%type-image(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-internalformat-format-%type-canvas(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-internalformat-format-%type-video(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-internalformat-format-%type-video-frame(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, video-frame>),
+    target-level-internalformat-width-height-border-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view>),
+    target-level-internalformat-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    target-level-internalformat-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    target-level-internalformat-format-type-image(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    target-level-internalformat-format-type-canvas(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
+    target-level-internalformat-format-type-video(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    target-level-internalformat-format-type-video-frame(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
   }
   variant web-gl-rendering-context-tex-sub-image2-d-params {
-    target-level-xoffset-yoffset-width-height-format-%type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view>),
-    target-level-xoffset-yoffset-format-%type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-xoffset-yoffset-format-%type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
-    target-level-xoffset-yoffset-format-%type-image(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-xoffset-yoffset-format-%type-canvas(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-xoffset-yoffset-format-%type-video(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-xoffset-yoffset-format-%type-video-frame(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, video-frame>),
+    target-level-xoffset-yoffset-width-height-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view>),
+    target-level-xoffset-yoffset-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    target-level-xoffset-yoffset-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    target-level-xoffset-yoffset-format-type-image(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    target-level-xoffset-yoffset-format-type-canvas(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
+    target-level-xoffset-yoffset-format-type-video(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    target-level-xoffset-yoffset-format-type-video-frame(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
   }
   variant html-canvas-element-or-offscreen-canvas {
     html-canvas-element(borrow<html-canvas-element>),
@@ -2976,6 +3155,9 @@ interface global {
   record media-key-message-event-init {
     message-type: media-key-message-type,
     message: array-buffer,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   record performance-observer-init {
     entry-types: list<string>,
@@ -3046,6 +3228,9 @@ interface global {
   }
   record grouped-history-event-init {
     other-browser: option<option<borrow<element>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource cache-storage {
     match: func(request: request-info, options: option<cache-query-options>) -> response;
@@ -3105,6 +3290,10 @@ interface global {
   record gamepad-axis-move-event-init {
     axis: option<u32>,
     value: option<f64>,
+    gamepad: option<option<borrow<gamepad>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource svg-rect-element {
     as-svg-geometry-element: func() -> svg-geometry-element;
@@ -3737,59 +3926,59 @@ interface global {
     target-dst-byte-offset-src-data-src-offset-length(tuple<g-lenum, g-lintptr, array-buffer-view, g-luint, option<g-luint>>),
   }
   variant web-gl2-rendering-context-tex-image2-d-params {
-    target-level-internalformat-width-height-border-format-%type-pixels(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view>),
-    target-level-internalformat-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-internalformat-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-internalformat-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-internalformat-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, video-frame>),
-    target-level-internalformat-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-internalformat-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
-    target-level-internalformat-width-height-border-format-%type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, g-lintptr>),
-    target-level-internalformat-width-height-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-internalformat-width-height-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-internalformat-width-height-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-internalformat-width-height-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, video-frame>),
-    target-level-internalformat-width-height-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-internalformat-width-height-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-data>>),
-    target-level-internalformat-width-height-border-format-%type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view, g-luint>),
+    target-level-internalformat-width-height-border-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view>),
+    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
+    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
+    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    target-level-internalformat-width-height-border-format-type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, g-lintptr>),
+    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
+    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
+    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    target-level-internalformat-width-height-border-format-type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view, g-luint>),
   }
   variant web-gl2-rendering-context-tex-image3-d-params {
-    target-level-internalformat-width-height-depth-border-format-%type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, g-lintptr>),
-    target-level-internalformat-width-height-depth-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-internalformat-width-height-depth-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-internalformat-width-height-depth-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-internalformat-width-height-depth-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, video-frame>),
-    target-level-internalformat-width-height-depth-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-internalformat-width-height-depth-border-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-data>>),
-    target-level-internalformat-width-height-depth-border-format-%type-src-data(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view>),
-    target-level-internalformat-width-height-depth-border-format-%type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view, g-luint>),
+    target-level-internalformat-width-height-depth-border-format-type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, g-lintptr>),
+    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
+    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
+    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    target-level-internalformat-width-height-depth-border-format-type-src-data(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view>),
+    target-level-internalformat-width-height-depth-border-format-type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view, g-luint>),
   }
   variant web-gl2-rendering-context-tex-sub-image2-d-params {
-    target-level-xoffset-yoffset-width-height-format-%type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view>),
-    target-level-xoffset-yoffset-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-xoffset-yoffset-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-xoffset-yoffset-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-xoffset-yoffset-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, video-frame>),
-    target-level-xoffset-yoffset-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-xoffset-yoffset-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
-    target-level-xoffset-yoffset-width-height-format-%type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, g-lintptr>),
-    target-level-xoffset-yoffset-width-height-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-xoffset-yoffset-width-height-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-xoffset-yoffset-width-height-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-xoffset-yoffset-width-height-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, video-frame>),
-    target-level-xoffset-yoffset-width-height-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-xoffset-yoffset-width-height-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-data>>),
-    target-level-xoffset-yoffset-width-height-format-%type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view, g-luint>),
+    target-level-xoffset-yoffset-width-height-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view>),
+    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
+    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
+    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    target-level-xoffset-yoffset-width-height-format-type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, g-lintptr>),
+    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-canvas-element>>),
+    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-image-element>>),
+    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-video-element>>),
+    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<video-frame>>),
+    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-bitmap>>),
+    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-data>>),
+    target-level-xoffset-yoffset-width-height-format-type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view, g-luint>),
   }
   variant web-gl2-rendering-context-tex-sub-image3-d-params {
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-%type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, g-lintptr>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, video-frame>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-%type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-data>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-%type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view, option<g-luint>>),
+    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, g-lintptr>),
+    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-canvas-element>>),
+    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-image-element>>),
+    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-video-element>>),
+    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<video-frame>>),
+    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-bitmap>>),
+    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-data>>),
+    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view, option<g-luint>>),
   }
   variant web-gl2-rendering-context-compressed-tex-image2-d-params {
     target-level-internalformat-width-height-border-image-size-offset(tuple<g-lenum, g-lint, g-lenum, g-lsizei, g-lsizei, g-lint, g-lsizei, g-lintptr>),
@@ -3808,9 +3997,9 @@ interface global {
     target-level-xoffset-yoffset-zoffset-width-height-depth-format-src-data-src-offset-src-length-override(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, array-buffer-view, option<g-luint>, option<g-luint>>),
   }
   variant web-gl2-rendering-context-read-pixels-params {
-    x-y-width-height-format-%type-dst-data(tuple<g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view>),
-    x-y-width-height-format-%type-offset(tuple<g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, g-lintptr>),
-    x-y-width-height-format-%type-dst-data-dst-offset(tuple<g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view, g-luint>),
+    x-y-width-height-format-type-dst-data(tuple<g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view>),
+    x-y-width-height-format-type-offset(tuple<g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, g-lintptr>),
+    x-y-width-height-format-type-dst-data-dst-offset(tuple<g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view, g-luint>),
   }
   resource ext-color-buffer-float {
   }
@@ -3925,7 +4114,7 @@ interface global {
     box: option<resize-observer-box-options>,
   }
   resource resize-observer {
-    constructor(callback: resize-observer-callback);
+    constructor(callback: borrow<resize-observer-callback>);
     observe: func(target: borrow<element>, options: option<resize-observer-options>);
     unobserve: func(target: borrow<element>);
     disconnect: func();
@@ -4023,6 +4212,10 @@ interface global {
   }
   record gamepad-button-event-init {
     button: option<u32>,
+    gamepad: option<option<borrow<gamepad>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource text-track-cue-list {
     length: func() -> u32;
@@ -4268,6 +4461,9 @@ interface global {
   }
   record offline-audio-completion-event-init {
     rendered-buffer: borrow<audio-buffer>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource offline-audio-completion-event {
     as-event: func() -> event;
@@ -4587,6 +4783,11 @@ interface global {
   }
   record focus-event-init {
     related-target: option<option<borrow<event-target>>>,
+    view: option<option<borrow<window>>>,
+    detail: option<s32>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum decoder-doctor-notification-type {
     cannot-play,
@@ -4692,7 +4893,7 @@ interface global {
   }
   record tree-cell-info {
     row: option<s32>,
-    col: option<option<tree-column>>,
+    col: option<option<borrow<tree-column>>>,
     child-elt: option<string>,
   }
   resource tree-box-object {
@@ -4709,34 +4910,22 @@ interface global {
     get-last-visible-row: func() -> s32;
     get-page-length: func() -> s32;
     ensure-row-is-visible: func(index: s32);
-    ensure-cell-is-visible: func(row: s32, col: option<tree-column>);
+    ensure-cell-is-visible: func(row: s32, col: option<borrow<tree-column>>);
     scroll-to-row: func(index: s32);
     scroll-by-lines: func(num-lines: s32);
     scroll-by-pages: func(num-pages: s32);
     invalidate: func();
-    invalidate-column: func(col: option<tree-column>);
+    invalidate-column: func(col: option<borrow<tree-column>>);
     invalidate-row: func(index: s32);
-    invalidate-cell: func(row: s32, col: option<tree-column>);
+    invalidate-cell: func(row: s32, col: option<borrow<tree-column>>);
     invalidate-range: func(start-index: s32, end-index: s32);
     get-row-at: func(x: s32, y: s32) -> s32;
-    get-cell-at: func() -> tree-cell-info;
-    get-cell-at: func();
-    get-coords-for-cell-item: func() -> option<dom-rect>;
-    get-coords-for-cell-item: func();
-    is-cell-cropped: func(row: s32, col: option<tree-column>) -> bool;
+    is-cell-cropped: func(row: s32, col: option<borrow<tree-column>>) -> bool;
     row-count-changed: func(index: s32, count: s32);
     begin-update-batch: func();
     end-update-batch: func();
     clear-style-and-image-caches: func();
-    remove-image-cache-entry: func(row: s32, col: tree-column);
-  }
-  variant tree-box-object-get-cell-at-params {
-    x-y(tuple<s32, s32>),
-    x-y-row-column-child-elt(tuple<s32, s32, object, object, object>),
-  }
-  variant tree-box-object-get-coords-for-cell-item-params {
-    row-col-element(tuple<s32, tree-column, string>),
-    row-col-element-x-y-width-height(tuple<s32, tree-column, string, object, object, object, object>),
+    remove-image-cache-entry: func(row: s32, col: borrow<tree-column>);
   }
   resource svgfe-offset-element {
     as-svg-element: func() -> svg-element;
@@ -4759,6 +4948,9 @@ interface global {
     animation-name: option<string>,
     elapsed-time: option<f32>,
     pseudo-element: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource close-event {
     as-event: func() -> event;
@@ -4770,6 +4962,9 @@ interface global {
     was-clean: option<bool>,
     code: option<u16>,
     reason: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource style-sheet-change-event {
     as-event: func() -> event;
@@ -4779,6 +4974,9 @@ interface global {
   record style-sheet-change-event-init {
     stylesheet: option<option<borrow<css-style-sheet>>>,
     document-sheet: option<bool>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum idb-cursor-direction {
     next,
@@ -4787,7 +4985,7 @@ interface global {
     prevunique,
   }
   resource idb-cursor {
-    source: func() -> idb-index-or-idb-object-store;
+    // source: func() -> idb-index-or-idb-object-store;
     direction: func() -> idb-cursor-direction;
     key: func() -> any;
     primary-key: func() -> any;
@@ -4818,7 +5016,7 @@ interface global {
     set-data: func(format: string, data: string);
     clear-data: func(format: option<string>);
     files: func() -> option<file-list>;
-    get-files-and-directories: func() -> list<directory-or-file>;
+    // get-files-and-directories: func() -> list<directory-or-file>;
     get-files: func(recursive-flag: option<bool>) -> list<file>;
   }
   variant directory-or-file {
@@ -4836,7 +5034,7 @@ interface global {
   }
   resource html-form-controls-collection {
     as-html-collection: func() -> html-collection;
-    named-item: func(name: string) -> element-or-radio-node-list;
+    // named-item: func(name: string) -> element-or-radio-node-list;
   }
   variant element-or-radio-node-list {
     element(borrow<element>),
@@ -4952,8 +5150,8 @@ interface global {
     maximum-age: option<u32>,
   }
   resource geolocation {
-    get-current-position: func(success-callback: position-callback, error-callback: option<option<position-error-callback>>, options: option<position-options>);
-    watch-position: func(success-callback: position-callback, error-callback: option<option<position-error-callback>>, options: option<position-options>) -> s32;
+    get-current-position: func(success-callback: borrow<position-callback>, error-callback: option<option<borrow<position-error-callback>>>, options: option<position-options>);
+    watch-position: func(success-callback: borrow<position-callback>, error-callback: option<option<borrow<position-error-callback>>>, options: option<position-options>) -> s32;
     clear-watch: func(watch-id: s32);
   }
   resource svgfe-drop-shadow-element {
@@ -5014,19 +5212,19 @@ interface global {
     delete-database: func(name: string, options: option<idb-open-db-options>) -> idb-open-db-request;
     cmp: func(first: any, second: any) -> s16;
     open-for-principal: func(params: idb-factory-open-for-principal-params) -> idb-open-db-request;
-    delete-for-principal: func(principal: principal, name: string, options: option<idb-open-db-options>) -> idb-open-db-request;
+    delete-for-principal: func(principal: borrow<principal>, name: string, options: option<idb-open-db-options>) -> idb-open-db-request;
   }
   variant idb-factory-open-params {
     name-version(tuple<string, u64>),
     name-options(tuple<string, option<idb-open-db-options>>),
   }
   variant idb-factory-open-for-principal-params {
-    principal-name-version(tuple<principal, string, u64>),
-    principal-name-options(tuple<principal, string, option<idb-open-db-options>>),
+    principal-name-version(tuple<borrow<principal>, string, u64>),
+    principal-name-options(tuple<borrow<principal>, string, option<idb-open-db-options>>),
   }
   variant f64-or-keyframe-animation-options {
     %f64(f64),
-    keyframe-animation-options(keyframe-animation-options),
+    keyframe-animation-options(borrow<keyframe-animation-options>),
   }
   type unrestricted-double-or-keyframe-animation-options = f64-or-keyframe-animation-options;
   resource record-f64 {
@@ -5045,6 +5243,9 @@ interface global {
     output-channel-count: option<list<u32>>,
     parameter-data: option<record-f64>,
     processor-options: option<object>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource audio-worklet-node {
     as-audio-node: func() -> audio-node;
@@ -5137,9 +5338,9 @@ interface global {
     whole-text: func() -> string;
     assigned-slot: func() -> option<html-slot-element>;
     get-box-quads: func(options: option<box-quad-options>) -> list<dom-quad>;
-    convert-quad-from-node: func(quad: borrow<dom-quad>, from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
-    convert-rect-from-node: func(rect: borrow<dom-rect-read-only>, from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
-    convert-point-from-node: func(point: dom-point-init, from: geometry-node, options: option<convert-coordinate-options>) -> dom-point;
+    convert-quad-from-node: func(quad: borrow<dom-quad>, %from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
+    convert-rect-from-node: func(rect: borrow<dom-rect-read-only>, %from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
+    convert-point-from-node: func(point: dom-point-init, %from: geometry-node, options: option<convert-coordinate-options>) -> dom-point;
   }
   resource css-namespace-rule {
     as-css-rule: func() -> css-rule;
@@ -5282,11 +5483,11 @@ interface global {
     idp-login-url: func() -> string;
     id: func() -> string;
     set-id: func(id: string);
-    get-configuration: func() -> rtc-configuration;
+    // get-configuration: func() -> rtc-configuration;
     get-local-streams: func() -> list<media-stream>;
     get-remote-streams: func() -> list<media-stream>;
-    add-stream: func(stream: borrow<media-stream>);
-    add-track: func(track: borrow<media-stream-track>, stream: borrow<media-stream>, more-streams: list<borrow<media-stream>>) -> rtc-rtp-sender;
+    add-stream: func(%stream: borrow<media-stream>);
+    add-track: func(track: borrow<media-stream-track>, %stream: borrow<media-stream>, more-streams: list<borrow<media-stream>>) -> rtc-rtp-sender;
     remove-track: func(sender: borrow<rtc-rtp-sender>);
     add-transceiver: func(track-or-kind: media-stream-track-or-string, init: option<rtc-rtp-transceiver-init>) -> rtc-rtp-transceiver;
     get-senders: func() -> list<rtc-rtp-sender>;
@@ -5317,12 +5518,12 @@ interface global {
     create-data-channel: func(label: string, data-channel-dict: option<rtc-data-channel-init>) -> rtc-data-channel;
     ondatachannel: func() -> event-handler;
     set-ondatachannel: func(ondatachannel: event-handler);
-    create-offer: func(success-callback: rtc-session-description-callback, failure-callback: rtc-peer-connection-error-callback, options: option<rtc-offer-options>);
-    create-answer: func(success-callback: rtc-session-description-callback, failure-callback: rtc-peer-connection-error-callback);
-    set-local-description: func(description: rtc-session-description-init, success-callback: void-function, failure-callback: rtc-peer-connection-error-callback);
-    set-remote-description: func(description: rtc-session-description-init, success-callback: void-function, failure-callback: rtc-peer-connection-error-callback);
-    add-ice-candidate: func(candidate: borrow<rtc-ice-candidate>, success-callback: void-function, failure-callback: rtc-peer-connection-error-callback);
-    get-stats: func(selector: option<borrow<media-stream-track>>, success-callback: rtc-stats-callback, failure-callback: rtc-peer-connection-error-callback);
+    // create-offer: func(success-callback: rtc-session-description-callback, failure-callback: rtc-peer-connection-error-callback, options: option<rtc-offer-options>);
+    // create-answer: func(success-callback: rtc-session-description-callback, failure-callback: rtc-peer-connection-error-callback);
+    // set-local-description: func(description: rtc-session-description-init, success-callback: borrow<void-function>, failure-callback: rtc-peer-connection-error-callback);
+    // set-remote-description: func(description: rtc-session-description-init, success-callback: borrow<void-function>, failure-callback: rtc-peer-connection-error-callback);
+    // add-ice-candidate: func(candidate: borrow<rtc-ice-candidate>, success-callback: borrow<void-function>, failure-callback: rtc-peer-connection-error-callback);
+    // get-stats: func(selector: option<borrow<media-stream-track>>, success-callback: rtc-stats-callback, failure-callback: rtc-peer-connection-error-callback);
   }
   variant rtc-ice-candidate-or-rtc-ice-candidate-init {
     rtc-ice-candidate(borrow<rtc-ice-candidate>),
@@ -5336,7 +5537,11 @@ interface global {
     as-event: func() -> event;
     wait-until: func(p: any);
   }
-  record extendable-event-init {  }
+  record extendable-event-init {
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
+  }
   resource style-sheet {
     %type: func() -> string;
     href: func() -> string;
@@ -5412,8 +5617,8 @@ interface global {
     caret-bidi-level: func() -> s16;
     set-caret-bidi-level: func(caret-bidi-level: s16);
     to-string-with-format: func(format-type: string, %flags: u32, wrap-column: s32) -> string;
-    add-selection-listener: func(new-listener: ns-i-selection-listener);
-    remove-selection-listener: func(listener-to-remove: ns-i-selection-listener);
+    add-selection-listener: func(new-listener: borrow<ns-i-selection-listener>);
+    remove-selection-listener: func(listener-to-remove: borrow<ns-i-selection-listener>);
     selection-type: func() -> s16;
     get-ranges-for-interval: func(begin-node: borrow<node>, begin-offset: s32, end-node: borrow<node>, end-offset: s32, allow-adjacent: bool) -> list<range>;
     scroll-into-view: func(a-region: s16, a-is-synchronous: bool, av-percent: s16, ah-percent: s16);
@@ -5426,6 +5631,9 @@ interface global {
   }
   record blob-event-init {
     data: option<option<borrow<blob>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   record offline-audio-context-options {
     number-of-channels: option<u32>,
@@ -5448,7 +5656,7 @@ interface global {
     onstatechange: func() -> event-handler;
     set-onstatechange: func(onstatechange: event-handler);
     create-buffer: func(number-of-channels: u32, length: u32, sample-rate: f32) -> audio-buffer;
-    decode-audio-data: func(audio-data: array-buffer, success-callback: option<decode-success-callback>, error-callback: option<decode-error-callback>) -> audio-buffer;
+    decode-audio-data: func(audio-data: array-buffer, success-callback: option<borrow<decode-success-callback>>, error-callback: option<borrow<decode-error-callback>>) -> audio-buffer;
     create-buffer-source: func() -> audio-buffer-source-node;
     create-constant-source: func() -> constant-source-node;
     create-script-processor: func(buffer-size: option<u32>, number-of-input-channels: option<u32>, number-of-output-channels: option<u32>) -> script-processor-node;
@@ -5598,7 +5806,7 @@ interface global {
     off,
   }
   record console-instance-options {
-    dump: option<console-instance-dump-callback>,
+    dump: option<borrow<console-instance-dump-callback>>,
     prefix: option<string>,
     inner-id: option<string>,
     console-id: option<string>,
@@ -5612,6 +5820,9 @@ interface global {
   }
   record channel-splitter-options {
     number-of-outputs: option<u32>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource channel-splitter-node {
     as-audio-node: func() -> audio-node;
@@ -6239,7 +6450,7 @@ interface global {
     set-height: func(height: u32);
     get-context: func(context-id: string, context-options: any) -> option<ns-i-supports>;
     to-data-url: func(%type: option<string>, encoder-options: any) -> string;
-    to-blob: func(callback: blob-callback, %type: option<string>, encoder-options: any);
+    to-blob: func(callback: borrow<blob-callback>, %type: option<string>, encoder-options: any);
     transfer-control-to-offscreen: func() -> offscreen-canvas;
     capture-stream: func(frame-request-rate: option<f64>) -> media-stream;
   }
@@ -6264,8 +6475,8 @@ interface global {
   resource file-system-directory-entry {
     as-file-system-entry: func() -> file-system-entry;
     create-reader: func() -> file-system-directory-reader;
-    get-file: func(path: option<string>, options: option<file-system-flags>, success-callback: option<file-system-entry-callback>, error-callback: option<error-callback>);
-    get-directory: func(path: option<string>, options: option<file-system-flags>, success-callback: option<file-system-entry-callback>, error-callback: option<error-callback>);
+    get-file: func(path: option<string>, options: option<file-system-flags>, success-callback: option<borrow<file-system-entry-callback>>, error-callback: option<borrow<error-callback>>);
+    get-directory: func(path: option<string>, options: option<file-system-flags>, success-callback: option<borrow<file-system-entry-callback>>, error-callback: option<borrow<error-callback>>);
   }
   resource mouse-scroll-event {
     as-mouse-event: func() -> mouse-event;
@@ -6602,8 +6813,8 @@ interface global {
     selection: func() -> option<ns-i-tree-selection>;
     set-selection: func(selection: option<ns-i-tree-selection>);
     get-row-properties: func(row: s32) -> string;
-    get-cell-properties: func(row: s32, column: tree-column) -> string;
-    get-column-properties: func(column: tree-column) -> string;
+    get-cell-properties: func(row: s32, column: borrow<tree-column>) -> string;
+    get-column-properties: func(column: borrow<tree-column>) -> string;
     is-container: func(row: s32) -> bool;
     is-container-open: func(row: s32) -> bool;
     is-container-empty: func(row: s32) -> bool;
@@ -6617,21 +6828,21 @@ interface global {
     get-parent-index: func(row: s32) -> s32;
     has-next-sibling: func(row: s32, after-index: s32) -> bool;
     get-level: func(row: s32) -> s32;
-    get-image-src: func(row: s32, column: tree-column) -> string;
-    get-cell-value: func(row: s32, column: tree-column) -> string;
-    get-cell-text: func(row: s32, column: tree-column) -> string;
+    get-image-src: func(row: s32, column: borrow<tree-column>) -> string;
+    get-cell-value: func(row: s32, column: borrow<tree-column>) -> string;
+    get-cell-text: func(row: s32, column: borrow<tree-column>) -> string;
     set-tree: func(tree: option<borrow<tree-box-object>>);
     toggle-open-state: func(row: s32);
-    cycle-header: func(column: tree-column);
+    cycle-header: func(column: borrow<tree-column>);
     selection-changed: func();
-    cycle-cell: func(row: s32, column: tree-column);
-    is-editable: func(row: s32, column: tree-column) -> bool;
-    is-selectable: func(row: s32, column: tree-column) -> bool;
-    set-cell-value: func(row: s32, column: tree-column, value: string);
-    set-cell-text: func(row: s32, column: tree-column, value: string);
+    cycle-cell: func(row: s32, column: borrow<tree-column>);
+    is-editable: func(row: s32, column: borrow<tree-column>) -> bool;
+    is-selectable: func(row: s32, column: borrow<tree-column>) -> bool;
+    set-cell-value: func(row: s32, column: borrow<tree-column>, value: string);
+    set-cell-text: func(row: s32, column: borrow<tree-column>, value: string);
     perform-action: func(action: string);
     perform-action-on-row: func(action: string, row: s32);
-    perform-action-on-cell: func(action: string, row: s32, column: tree-column);
+    perform-action-on-cell: func(action: string, row: s32, column: borrow<tree-column>);
   }
   resource html-label-element {
     as-html-element: func() -> html-element;
@@ -6694,6 +6905,9 @@ interface global {
     track: borrow<media-stream-track>,
     streams: option<list<borrow<media-stream>>>,
     transceiver: borrow<rtc-rtp-transceiver>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource rtc-track-event {
     as-event: func() -> event;
@@ -6763,6 +6977,9 @@ interface global {
   record idb-version-change-event-init {
     old-version: option<u64>,
     new-version: option<u64>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource idb-version-change-event {
     as-event: func() -> event;
@@ -6782,6 +6999,9 @@ interface global {
   }
   record presentation-connection-available-event-init {
     connection: borrow<presentation-connection>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource svg-number {
     value: func() -> f32;
@@ -6860,6 +7080,9 @@ interface global {
   }
   record scroll-view-change-event-init {
     state: option<scroll-state>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource scroll-view-change-event {
     as-event: func() -> event;
@@ -6878,6 +7101,9 @@ interface global {
   record style-sheet-applicable-state-change-event-init {
     stylesheet: option<option<borrow<css-style-sheet>>>,
     applicable: option<bool>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource css {
     supports: func(params: css-supports-params) -> bool;
@@ -6892,6 +7118,9 @@ interface global {
     ratio: option<f32>,
     release: option<f32>,
     threshold: option<f32>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource dynamics-compressor-node {
     as-audio-node: func() -> audio-node;
@@ -7096,11 +7325,11 @@ interface global {
     set-depth-near: func(depth-near: f64);
     depth-far: func() -> f64;
     set-depth-far: func(depth-far: f64);
-    request-animation-frame: func(callback: frame-request-callback) -> s32;
+    request-animation-frame: func(callback: borrow<frame-request-callback>) -> s32;
     cancel-animation-frame: func(handle: s32);
     request-present: func(layers: list<vr-layer>);
     exit-present: func();
-    get-layers: func() -> list<vr-layer>;
+    // get-layers: func() -> list<vr-layer>;
     submit-frame: func();
   }
   resource file-system-entry {
@@ -7109,7 +7338,7 @@ interface global {
     name: func() -> string;
     full-path: func() -> string;
     filesystem: func() -> file-system;
-    get-parent: func(success-callback: option<file-system-entry-callback>, error-callback: option<error-callback>);
+    get-parent: func(success-callback: option<borrow<file-system-entry-callback>>, error-callback: option<borrow<error-callback>>);
   }
   resource wheel-event {
     as-mouse-event: func() -> mouse-event;
@@ -7126,6 +7355,15 @@ interface global {
     delta-y: option<f64>,
     delta-z: option<f64>,
     delta-mode: option<u32>,
+    screen-x: option<s32>,
+    screen-y: option<s32>,
+    client-x: option<s32>,
+    client-y: option<s32>,
+    button: option<s16>,
+    buttons: option<u16>,
+    related-target: option<option<borrow<event-target>>>,
+    movement-x: option<s32>,
+    movement-y: option<s32>,
   }
   record udp-options {
     local-address: option<string>,
@@ -7183,6 +7421,9 @@ interface global {
   }
   record rtcdtmf-tone-change-event-init {
     tone: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource character-data {
     as-node: func() -> node;
@@ -7203,6 +7444,9 @@ interface global {
   }
   record font-face-set-load-event-init {
     fontfaces: option<list<borrow<font-face>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource font-face-set-load-event {
     as-event: func() -> event;
@@ -7259,7 +7503,7 @@ interface global {
     p4: func() -> dom-point;
     get-bounds: func() -> dom-rect-read-only;
     bounds: func() -> dom-rect-read-only;
-    to-json: func() -> dom-quad-json;
+    // to-json: func() -> dom-quad-json;
   }
   record dom-quad-json {
     p1: option<borrow<dom-point>>,
@@ -7291,6 +7535,9 @@ interface global {
   record animation-playback-event-init {
     current-time: option<f64>,
     timeline-time: option<f64>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource dom-rect {
     as-dom-rect-read-only: func() -> dom-rect-read-only;
@@ -7329,6 +7576,9 @@ interface global {
     max-decibels: option<f64>,
     min-decibels: option<f64>,
     smoothing-time-constant: option<f64>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource analyser-node {
     as-audio-node: func() -> audio-node;
@@ -7420,7 +7670,10 @@ interface global {
     tag: func() -> option<plugin-tag>;
   }
   record hidden-plugin-event-init {
-    tag: option<option<plugin-tag>>,
+    tag: option<option<borrow<plugin-tag>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource svg-pattern-element {
     as-svg-element: func() -> svg-element;
@@ -7469,7 +7722,7 @@ interface global {
     key: func() -> string;
     code: func() -> string;
     init-keyboard-event: func(type-arg: string, bubbles-arg: option<bool>, cancelable-arg: option<bool>, view-arg: option<option<borrow<window>>>, key-arg: option<string>, location-arg: option<u32>, ctrl-key: option<bool>, alt-key: option<bool>, shift-key: option<bool>, meta-key: option<bool>);
-    init-dict: func() -> keyboard-event-init;
+    // init-dict: func() -> keyboard-event-init;
   }
   record keyboard-event-init {
     key: option<string>,
@@ -7480,6 +7733,24 @@ interface global {
     char-code: option<u32>,
     key-code: option<u32>,
     which: option<u32>,
+    ctrl-key: option<bool>,
+    shift-key: option<bool>,
+    alt-key: option<bool>,
+    meta-key: option<bool>,
+    modifier-alt-graph: option<bool>,
+    modifier-caps-lock: option<bool>,
+    modifier-fn: option<bool>,
+    modifier-fn-lock: option<bool>,
+    modifier-num-lock: option<bool>,
+    modifier-os: option<bool>,
+    modifier-scroll-lock: option<bool>,
+    modifier-symbol: option<bool>,
+    modifier-symbol-lock: option<bool>,
+    view: option<option<borrow<window>>>,
+    detail: option<s32>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource html-meter-element {
     as-html-element: func() -> html-element;
@@ -7514,6 +7785,9 @@ interface global {
     length-computable: option<bool>,
     loaded: option<u64>,
     total: option<u64>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource audio-param {
     value: func() -> f32;
@@ -7538,6 +7812,9 @@ interface global {
     value: option<f64>,
     min: option<f64>,
     max: option<f64>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource service-worker {
     as-event-target: func() -> event-target;
@@ -7589,6 +7866,9 @@ interface global {
     frequency: option<f32>,
     detune: option<f32>,
     periodic-wave: option<borrow<periodic-wave>>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource oscillator-node {
     as-audio-scheduled-source-node: func() -> audio-scheduled-source-node;
@@ -7627,6 +7907,9 @@ interface global {
   }
   record media-stream-track-event-init {
     track: borrow<media-stream-track>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource media-stream-track-event {
     as-event: func() -> event;
@@ -7699,7 +7982,7 @@ interface global {
     set-onmessage: func(onmessage: event-handler);
     onmessageerror: func() -> event-handler;
     set-onmessageerror: func(onmessageerror: event-handler);
-    request-animation-frame: func(callback: frame-request-callback) -> s32;
+    request-animation-frame: func(callback: borrow<frame-request-callback>) -> s32;
     cancel-animation-frame: func(handle: s32);
   }
   variant headers-or-list-list-string-or-record-string {
@@ -7747,8 +8030,8 @@ interface global {
   resource form-data {
     append: func(params: form-data-append-params);
     delete: func(name: string);
-    get: func(name: string) -> option<form-data-entry-value>;
-    get-all: func(name: string) -> list<form-data-entry-value>;
+    // get: func(name: string) -> option<form-data-entry-value>;
+    // get-all: func(name: string) -> list<form-data-entry-value>;
     has: func(name: string) -> bool;
     set: func(params: form-data-set-params);
   }
@@ -7914,7 +8197,7 @@ interface global {
     navigator: func() -> navigator;
     external: func() -> external;
     application-cache: func() -> application-cache;
-    alert: func(params: window-alert-params);
+    alert: func(params: option<window-alert-params>);
     confirm: func(message: option<string>) -> bool;
     prompt: func(message: option<string>, default: option<string>) -> string;
     print: func();
@@ -8172,7 +8455,7 @@ interface global {
     onvrdisplaypresentchange: func() -> event-handler;
     set-onvrdisplaypresentchange: func(onvrdisplaypresentchange: event-handler);
     paint-worklet: func() -> worklet;
-    request-idle-callback: func(callback: idle-request-callback, options: option<idle-request-options>) -> u32;
+    request-idle-callback: func(callback: borrow<idle-request-callback>, options: option<idle-request-options>) -> u32;
     cancel-idle-callback: func(handle: u32);
     crypto: func() -> crypto;
     origin: func() -> string;
@@ -8183,11 +8466,10 @@ interface global {
     set-interval: func(params: window-set-interval-params) -> s32;
     clear-interval: func(handle: option<s32>);
     create-image-bitmap: func(params: window-create-image-bitmap-params) -> image-bitmap;
-    request-animation-frame: func(callback: frame-request-callback) -> s32;
+    request-animation-frame: func(callback: borrow<frame-request-callback>) -> s32;
     cancel-animation-frame: func(handle: s32);
   }
   variant window-alert-params {
-    (tuple<>),
     message(string),
   }
   enum scroll-behavior {
@@ -8226,6 +8508,9 @@ interface global {
   record style-rule-change-event-init {
     stylesheet: option<option<borrow<css-style-sheet>>>,
     rule: option<option<borrow<css-rule>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource performance-mark {
     as-performance-entry: func() -> performance-entry;
@@ -8350,9 +8635,9 @@ interface global {
     append: func(nodes: list<node-or-string>);
     replace-children: func(nodes: list<node-or-string>);
     get-box-quads: func(options: option<box-quad-options>) -> list<dom-quad>;
-    convert-quad-from-node: func(quad: borrow<dom-quad>, from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
-    convert-rect-from-node: func(rect: borrow<dom-rect-read-only>, from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
-    convert-point-from-node: func(point: dom-point-init, from: geometry-node, options: option<convert-coordinate-options>) -> dom-point;
+    convert-quad-from-node: func(quad: borrow<dom-quad>, %from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
+    convert-rect-from-node: func(rect: borrow<dom-rect-read-only>, %from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
+    convert-point-from-node: func(point: dom-point-init, %from: geometry-node, options: option<convert-coordinate-options>) -> dom-point;
     request-fullscreen: func();
     request-pointer-lock: func();
     before: func(nodes: list<node-or-string>);
@@ -8438,6 +8723,9 @@ interface global {
     remote-address: option<string>,
     remote-port: option<u16>,
     data: any,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource html-link-element {
     as-html-element: func() -> html-element;
@@ -8467,8 +8755,8 @@ interface global {
     set-target: func(target: string);
     integrity: func() -> string;
     set-integrity: func(integrity: string);
-    as: func() -> string;
-    set-as: func(as: string);
+    %as: func() -> string;
+    set-as: func(%as: string);
     sheet: func() -> option<style-sheet>;
   }
   resource document-fragment {
@@ -8486,6 +8774,9 @@ interface global {
   }
   record stereo-panner-options {
     pan: option<f32>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource stereo-panner-node {
     as-audio-node: func() -> audio-node;
@@ -8506,6 +8797,9 @@ interface global {
     new-value: option<string>,
     url: option<string>,
     storage-area: option<option<borrow<storage>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum fetch-state {
     requesting,
@@ -8569,7 +8863,7 @@ interface global {
     onstatechange: func() -> event-handler;
     set-onstatechange: func(onstatechange: event-handler);
     create-buffer: func(number-of-channels: u32, length: u32, sample-rate: f32) -> audio-buffer;
-    decode-audio-data: func(audio-data: array-buffer, success-callback: option<decode-success-callback>, error-callback: option<decode-error-callback>) -> audio-buffer;
+    decode-audio-data: func(audio-data: array-buffer, success-callback: option<borrow<decode-success-callback>>, error-callback: option<borrow<decode-error-callback>>) -> audio-buffer;
     create-buffer-source: func() -> audio-buffer-source-node;
     create-constant-source: func() -> constant-source-node;
     create-script-processor: func(buffer-size: option<u32>, number-of-input-channels: option<u32>, number-of-output-channels: option<u32>) -> script-processor-node;
@@ -8598,6 +8892,9 @@ interface global {
     property-name: option<string>,
     elapsed-time: option<f32>,
     pseudo-element: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum permission-state {
     granted,
@@ -8815,7 +9112,7 @@ interface global {
   }
   resource media-recorder {
     as-event-target: func() -> event-target;
-    stream: func() -> media-stream;
+    %stream: func() -> media-stream;
     state: func() -> recording-state;
     mime-type: func() -> string;
     ondataavailable: func() -> event-handler;
@@ -8859,6 +9156,9 @@ interface global {
   }
   record submit-event-init {
     submitter: option<option<borrow<html-element>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum scroll-setting {
     default,
@@ -8890,6 +9190,9 @@ interface global {
   record media-key-needed-event-init {
     init-data-type: option<string>,
     init-data: option<array-buffer>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource device-orientation-event {
     as-event: func() -> event;
@@ -8904,6 +9207,9 @@ interface global {
     beta: option<f64>,
     gamma: option<f64>,
     absolute: option<bool>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource svg-metadata-element {
     as-svg-element: func() -> svg-element;
@@ -8917,7 +9223,7 @@ interface global {
     name: func() -> string;
     %type: func() -> string;
     database: func() -> idb-database;
-    open: func(mode: option<file-mode>) -> idb-file-handle;
+    open: func(mode: option<borrow<file-mode>>) -> idb-file-handle;
     get-file: func() -> dom-request;
     onabort: func() -> event-handler;
     set-onabort: func(onabort: event-handler);
@@ -8955,6 +9261,15 @@ interface global {
     pointer-type: option<string>,
     is-primary: option<bool>,
     coalesced-events: option<list<borrow<pointer-event>>>,
+    screen-x: option<s32>,
+    screen-y: option<s32>,
+    client-x: option<s32>,
+    client-y: option<s32>,
+    button: option<s16>,
+    buttons: option<u16>,
+    related-target: option<option<borrow<event-target>>>,
+    movement-x: option<s32>,
+    movement-y: option<s32>,
   }
   enum xml-http-request-response-type {
     default,
@@ -9043,6 +9358,11 @@ interface global {
     is-composing: option<bool>,
     input-type: option<string>,
     data: option<string>,
+    view: option<option<borrow<window>>>,
+    detail: option<s32>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource dom-rect-list {
     length: func() -> u32;
@@ -9156,7 +9476,7 @@ interface global {
     onstatechange: func() -> event-handler;
     set-onstatechange: func(onstatechange: event-handler);
     create-buffer: func(number-of-channels: u32, length: u32, sample-rate: f32) -> audio-buffer;
-    decode-audio-data: func(audio-data: array-buffer, success-callback: option<decode-success-callback>, error-callback: option<decode-error-callback>) -> audio-buffer;
+    decode-audio-data: func(audio-data: array-buffer, success-callback: option<borrow<decode-success-callback>>, error-callback: option<borrow<decode-error-callback>>) -> audio-buffer;
     create-buffer-source: func() -> audio-buffer-source-node;
     create-constant-source: func() -> constant-source-node;
     create-script-processor: func(buffer-size: option<u32>, number-of-input-channels: option<u32>, number-of-output-channels: option<u32>) -> script-processor-node;
@@ -9314,6 +9634,9 @@ interface global {
   }
   record midi-connection-event-init {
     port: option<option<borrow<midi-port>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource html-details-element {
     as-html-element: func() -> html-element;
@@ -9367,8 +9690,6 @@ interface global {
     set-domain: func(domain: string);
     cookie: func() -> string;
     set-cookie: func(cookie: string);
-    open: func() -> document;
-    open: func() -> option<window-proxy>;
     close: func();
     write: func(text: list<string>);
     writeln: func(text: list<string>);
@@ -9397,10 +9718,6 @@ interface global {
     blocked-tracking-node-count: func() -> s32;
     blocked-tracking-nodes: func() -> node-list;
   }
-  variant html-document-open-params {
-    %type-replace(tuple<option<string>, option<string>>),
-    url-name-features-replace(tuple<string, string, string, option<bool>>),
-  }
   resource push-event {
     as-extendable-event: func() -> extendable-event;
     data: func() -> option<push-message-data>;
@@ -9412,6 +9729,9 @@ interface global {
   type push-message-data-init = buffer-source-or-string;
   record push-event-init {
     data: option<push-message-data-init>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum binary-type {
     blob,
@@ -9440,7 +9760,7 @@ interface global {
     binary-type: func() -> binary-type;
     set-binary-type: func(binary-type: binary-type);
     send: func(params: web-socket-send-params);
-    create-server-web-socket: static func(url: string, protocols: list<string>, transport-provider: ns-i-transport-provider, negotiated-extensions: string) -> web-socket;
+    create-server-web-socket: static func(url: string, protocols: list<string>, transport-provider: borrow<ns-i-transport-provider>, negotiated-extensions: string) -> web-socket;
   }
   variant web-socket-send-params {
     data(string),
@@ -9483,6 +9803,9 @@ interface global {
   }
   record rtc-data-channel-event-init {
     channel: borrow<rtc-data-channel>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource rtc-data-channel-event {
     as-event: func() -> event;
@@ -9671,6 +9994,9 @@ interface global {
   record iir-filter-options {
     feedforward: list<f64>,
     feedback: list<f64>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource iir-filter-node {
     as-audio-node: func() -> audio-node;
@@ -9710,7 +10036,7 @@ interface global {
     set-max-alternatives: func(max-alternatives: u32);
     service-uri: func() -> string;
     set-service-uri: func(service-uri: string);
-    start: func(stream: option<borrow<media-stream>>);
+    start: func(%stream: option<borrow<media-stream>>);
     stop: func();
     abort: func();
     onaudiostart: func() -> event-handler;
@@ -9762,14 +10088,14 @@ interface global {
     as-event-target: func() -> event-target;
     media: func() -> string;
     matches: func() -> bool;
-    add-listener: func(listener: option<event-listener>);
-    remove-listener: func(listener: option<event-listener>);
+    add-listener: func(listener: option<borrow<event-listener>>);
+    remove-listener: func(listener: option<borrow<event-listener>>);
     onchange: func() -> event-handler;
     set-onchange: func(onchange: event-handler);
   }
   resource paint-worklet-global-scope {
     as-worklet-global-scope: func() -> worklet-global-scope;
-    register-paint: func(name: string, paint-ctor: void-function);
+    register-paint: func(name: string, paint-ctor: borrow<void-function>);
   }
   record media-element-audio-source-options {
     media-element: borrow<html-media-element>,
@@ -9800,6 +10126,9 @@ interface global {
   }
   record device-light-event-init {
     value: option<f64>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource svg-animated-rect {
     base-val: func() -> option<svg-rect>;
@@ -9867,6 +10196,9 @@ interface global {
   record page-transition-event-init {
     persisted: option<bool>,
     in-frame-swap: option<bool>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource html-anchor-element {
     as-html-element: func() -> html-element;
@@ -10066,9 +10398,12 @@ interface global {
   }
   record popup-blocked-event-init {
     requesting-window: option<option<borrow<window>>>,
-    popup-window-uri: option<option<uri>>,
+    popup-window-uri: option<option<borrow<uri>>>,
     popup-window-name: option<string>,
     popup-window-features: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource htmlbr-element {
     as-html-element: func() -> html-element;
@@ -10275,6 +10610,9 @@ interface global {
     results: option<option<borrow<speech-recognition-result-list>>>,
     interpretation: any,
     emma: option<option<borrow<document>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource tcp-socket-error-event {
     as-event: func() -> event;
@@ -10284,6 +10622,9 @@ interface global {
   record tcp-socket-error-event-init {
     name: option<string>,
     message: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource client {
     url: func() -> string;
@@ -10319,8 +10660,8 @@ interface global {
     validate-assertion: func(assertion: string, origin: string) -> rtc-identity-validation-result;
   }
   record rtc-identity-provider {
-    generate-assertion: generate-assertion-callback,
-    validate-assertion: validate-assertion-callback,
+    generate-assertion: borrow<generate-assertion-callback>,
+    validate-assertion: borrow<validate-assertion-callback>,
   }
   record rtc-identity-assertion-result {
     idp: rtc-identity-provider-details,
@@ -10481,7 +10822,7 @@ interface global {
     data: func() -> any;
     origin: func() -> string;
     last-event-id: func() -> string;
-    source: func() -> option<message-event-source>;
+    // source: func() -> option<message-event-source>;
     ports: func() -> list<message-port>;
     init-message-event: func(%type: string, bubbles: option<bool>, cancelable: option<bool>, data: any, origin: option<string>, last-event-id: option<string>, source: option<option<message-event-source>>, ports: option<list<borrow<message-port>>>);
   }
@@ -10491,11 +10832,14 @@ interface global {
     last-event-id: option<string>,
     source: option<option<message-event-source>>,
     ports: option<list<borrow<message-port>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   variant message-port-or-service-worker-or-window-proxy {
     message-port(borrow<message-port>),
     service-worker(borrow<service-worker>),
-    window-proxy(window-proxy),
+    window-proxy(borrow<window-proxy>),
   }
   type message-event-source = message-port-or-service-worker-or-window-proxy;
   resource tcp-server-socket-event {
@@ -10504,6 +10848,9 @@ interface global {
   }
   record tcp-server-socket-event-init {
     socket: option<option<borrow<tcp-socket>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource svg-use-element {
     as-svg-graphics-element: func() -> svg-graphics-element;
@@ -10567,9 +10914,7 @@ interface global {
   }
   resource audio-node {
     as-event-target: func() -> event-target;
-    connect: func() -> audio-node;
-    connect: func();
-    disconnect: func(params: audio-node-disconnect-params);
+    disconnect: func(params: option<audio-node-disconnect-params>);
     context: func() -> base-audio-context;
     number-of-inputs: func() -> u32;
     number-of-outputs: func() -> u32;
@@ -10580,12 +10925,7 @@ interface global {
     channel-interpretation: func() -> channel-interpretation;
     set-channel-interpretation: func(channel-interpretation: channel-interpretation);
   }
-  variant audio-node-connect-params {
-    destination-output-input(tuple<borrow<audio-node>, option<u32>, option<u32>>),
-    destination-output(tuple<borrow<audio-param>, option<u32>>),
-  }
   variant audio-node-disconnect-params {
-    (tuple<>),
     output(u32),
     destination(borrow<audio-node>),
     destination-output(tuple<borrow<audio-node>, u32>),
@@ -10596,6 +10936,9 @@ interface global {
   record convolver-options {
     buffer: option<option<borrow<audio-buffer>>>,
     disable-normalization: option<bool>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource convolver-node {
     as-audio-node: func() -> audio-node;
@@ -10611,6 +10954,9 @@ interface global {
     duration: option<dom-high-res-time-stamp>,
     epoch: option<f64>,
     origin: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource performance-entry-event {
     as-event: func() -> event;
@@ -10627,6 +10973,9 @@ interface global {
   }
   record gamepad-event-init {
     gamepad: option<option<borrow<gamepad>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource svgfe-turbulence-element {
     as-svg-element: func() -> svg-element;
@@ -10672,6 +11021,9 @@ interface global {
     cone-inner-angle: option<f64>,
     cone-outer-angle: option<f64>,
     cone-outer-gain: option<f64>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource panner-node {
     as-audio-node: func() -> audio-node;
@@ -10712,7 +11064,7 @@ interface global {
   resource directory {
     name: func() -> string;
     path: func() -> string;
-    get-files-and-directories: func() -> list<directory-or-file>;
+    // get-files-and-directories: func() -> list<directory-or-file>;
     get-files: func(recursive-flag: option<bool>) -> list<file>;
   }
   resource caret-position {
@@ -10779,7 +11131,7 @@ interface global {
     redirect: option<request-redirect>,
     integrity: option<string>,
     signal: option<option<borrow<abort-signal>>>,
-    observe: option<observer-callback>,
+    observe: option<borrow<observer-callback>>,
   }
   enum request-destination {
     default,
@@ -10810,7 +11162,7 @@ interface global {
   enum request-credentials {
     omit,
     same-origin,
-    include,
+    %include,
   }
   enum request-cache {
     default,
@@ -10879,7 +11231,7 @@ interface global {
     create-contextual-fragment: func(fragment: string) -> document-fragment;
     get-client-rects: func() -> option<dom-rect-list>;
     get-bounding-client-rect: func() -> dom-rect;
-    get-client-rects-and-texts: func() -> client-rects-and-texts;
+    // get-client-rects-and-texts: func() -> client-rects-and-texts;
   }
   record client-rects-and-texts {
     rect-list: borrow<dom-rect-list>,
@@ -10903,7 +11255,7 @@ interface global {
   }
   resource file-system-file-entry {
     as-file-system-entry: func() -> file-system-entry;
-    file: func(success-callback: file-callback, error-callback: option<error-callback>);
+    file: func(success-callback: borrow<file-callback>, error-callback: option<borrow<error-callback>>);
   }
   resource service-worker-registration {
     as-event-target: func() -> event-target;
@@ -10918,7 +11270,7 @@ interface global {
     set-onupdatefound: func(onupdatefound: event-handler);
     push-manager: func() -> push-manager;
     show-notification: func(title: string, options: option<notification-options>);
-    get-notifications: func(filter: option<get-notification-options>) -> list<notification>;
+    get-notifications: func(filter: option<borrow<get-notification-options>>) -> list<notification>;
   }
   enum service-worker-update-via-cache {
     imports,
@@ -10941,17 +11293,11 @@ interface global {
   }
   resource html-all-collection {
     length: func() -> u32;
-    item: func() -> option<node>;
-    item: func() -> html-collection-or-node;
-    named-item: func(name: string) -> html-collection-or-node;
+    // named-item: func(name: string) -> html-collection-or-node;
   }
   variant html-collection-or-node {
     html-collection(borrow<html-collection>),
     node(borrow<node>),
-  }
-  variant html-all-collection-item-params {
-    index(u32),
-    name(string),
   }
   enum presentation-connection-state {
     connecting,
@@ -11049,9 +11395,9 @@ interface global {
     set-global-composite-operation: func(global-composite-operation: string);
     image-smoothing-enabled: func() -> bool;
     set-image-smoothing-enabled: func(image-smoothing-enabled: bool);
-    stroke-style: func() -> canvas-gradient-or-canvas-pattern-or-string;
+    // stroke-style: func() -> canvas-gradient-or-canvas-pattern-or-string;
     set-stroke-style: func(stroke-style: canvas-gradient-or-canvas-pattern-or-string);
-    fill-style: func() -> canvas-gradient-or-canvas-pattern-or-string;
+    // fill-style: func() -> canvas-gradient-or-canvas-pattern-or-string;
     set-fill-style: func(fill-style: canvas-gradient-or-canvas-pattern-or-string);
     create-linear-gradient: func(x0: f64, y0: f64, x1: f64, y1: f64) -> canvas-gradient;
     create-radial-gradient: func(x0: f64, y0: f64, r0: f64, x1: f64, y1: f64, r1: f64) -> canvas-gradient;
@@ -11071,7 +11417,7 @@ interface global {
     stroke-rect: func(x: f64, y: f64, w: f64, h: f64);
     begin-path: func();
     fill: func(params: offscreen-canvas-rendering-context2-d-fill-params);
-    stroke: func(params: offscreen-canvas-rendering-context2-d-stroke-params);
+    stroke: func(params: option<offscreen-canvas-rendering-context2-d-stroke-params>);
     clip: func(params: offscreen-canvas-rendering-context2-d-clip-params);
     is-point-in-path: func(params: offscreen-canvas-rendering-context2-d-is-point-in-path-params) -> bool;
     is-point-in-stroke: func(params: offscreen-canvas-rendering-context2-d-is-point-in-stroke-params) -> bool;
@@ -11120,7 +11466,6 @@ interface global {
     path-winding(tuple<borrow<path2-d>, option<canvas-winding-rule>>),
   }
   variant offscreen-canvas-rendering-context2-d-stroke-params {
-    (tuple<>),
     path(borrow<path2-d>),
   }
   variant offscreen-canvas-rendering-context2-d-clip-params {
@@ -11159,12 +11504,12 @@ interface global {
   }
   record checkerboard-report {
     severity: option<u32>,
-    timestamp: option<dom-time-stamp>,
+    timestamp: option<borrow<dom-time-stamp>>,
     log: option<string>,
     reason: option<checkerboard-reason>,
   }
   resource checkerboard-report-service {
-    get-reports: func() -> list<checkerboard-report>;
+    // get-reports: func() -> list<checkerboard-report>;
     is-recording-enabled: func() -> bool;
     set-recording-enabled: func(a-enabled: bool);
     flush-active-reports: func();
@@ -11310,7 +11655,7 @@ interface global {
   }
   resource track-event {
     as-event: func() -> event;
-    track: func() -> audio-track-or-text-track-or-video-track;
+    // track: func() -> audio-track-or-text-track-or-video-track;
   }
   variant audio-track-or-text-track-or-video-track {
     audio-track(borrow<audio-track>),
@@ -11319,6 +11664,9 @@ interface global {
   }
   record track-event-init {
     track: audio-track-or-text-track-or-video-track,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource css-rule-list {
     length: func() -> u32;
@@ -11356,6 +11704,9 @@ interface global {
   }
   record user-proximity-event-init {
     near: option<bool>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource speech-recognition-result {
     length: func() -> u32;
@@ -11366,7 +11717,7 @@ interface global {
     constructor(underlying-source: option<object>, strategy: option<queuing-strategy>);
     locked: func() -> bool;
     cancel: func(reason: any);
-    get-reader: func(options: option<readable-stream-get-reader-options>) -> readable-stream-reader;
+    // get-reader: func(options: option<readable-stream-get-reader-options>) -> readable-stream-reader;
     pipe-through: func(transform: readable-writable-pair, options: option<stream-pipe-options>) -> readable-stream;
     pipe-to: func(destination: borrow<writable-stream>, options: option<stream-pipe-options>);
     tee: func() -> list<readable-stream>;
@@ -11396,9 +11747,9 @@ interface global {
     signal: option<borrow<abort-signal>>,
   }
   record underlying-source {
-    start: option<underlying-source-start-callback>,
-    pull: option<underlying-source-pull-callback>,
-    cancel: option<underlying-source-cancel-callback>,
+    start: option<borrow<underlying-source-start-callback>>,
+    pull: option<borrow<underlying-source-pull-callback>>,
+    cancel: option<borrow<underlying-source-cancel-callback>>,
     %type: option<readable-stream-type>,
     auto-allocate-chunk-size: option<u64>,
   }
@@ -11411,7 +11762,7 @@ interface global {
     bytes,
   }
   resource readable-stream-default-reader {
-    constructor(stream: borrow<readable-stream>);
+    constructor(%stream: borrow<readable-stream>);
     read: func() -> readable-stream-read-result;
     release-lock: func();
     cancel: func(reason: any);
@@ -11421,7 +11772,7 @@ interface global {
     done: option<bool>,
   }
   resource readable-stream-byob-reader {
-    constructor(stream: borrow<readable-stream>);
+    constructor(%stream: borrow<readable-stream>);
     read: func(view: array-buffer-view) -> readable-stream-read-result;
     release-lock: func();
     cancel: func(reason: any);
@@ -11452,14 +11803,14 @@ interface global {
     get-writer: func() -> writable-stream-default-writer;
   }
   record underlying-sink {
-    start: option<underlying-sink-start-callback>,
-    write: option<underlying-sink-write-callback>,
-    close: option<underlying-sink-close-callback>,
-    abort: option<underlying-sink-abort-callback>,
+    start: option<borrow<underlying-sink-start-callback>>,
+    write: option<borrow<underlying-sink-write-callback>>,
+    close: option<borrow<underlying-sink-close-callback>>,
+    abort: option<borrow<underlying-sink-abort-callback>>,
     %type: any,
   }
   resource writable-stream-default-writer {
-    constructor(stream: borrow<writable-stream>);
+    constructor(%stream: borrow<writable-stream>);
     desired-size: func() -> f64;
     abort: func(reason: any);
     close: func();
@@ -11476,9 +11827,9 @@ interface global {
     writable: func() -> writable-stream;
   }
   record transformer {
-    start: option<transformer-start-callback>,
-    transform: option<transformer-transform-callback>,
-    flush: option<transformer-flush-callback>,
+    start: option<borrow<transformer-start-callback>>,
+    transform: option<borrow<transformer-transform-callback>>,
+    flush: option<borrow<transformer-flush-callback>>,
     readable-type: any,
     writable-type: any,
   }
@@ -11490,7 +11841,7 @@ interface global {
   }
   record queuing-strategy {
     high-water-mark: option<f64>,
-    size: option<queuing-strategy-size>,
+    size: option<borrow<queuing-strategy-size>>,
   }
   record queuing-strategy-init {
     high-water-mark: f64,
@@ -11534,6 +11885,9 @@ interface global {
   }
   record midi-message-event-init {
     data: option<uint8-array>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource svg-string-list {
     length: func() -> u32;
@@ -11549,7 +11903,7 @@ interface global {
   resource data-transfer-item {
     kind: func() -> string;
     %type: func() -> string;
-    get-as-string: func(callback: option<function-string-callback>);
+    get-as-string: func(callback: option<borrow<function-string-callback>>);
     get-as-file: func() -> option<file>;
     webkit-get-as-entry: func() -> option<file-system-entry>;
   }
@@ -11584,11 +11938,11 @@ interface global {
     animated-points: func() -> svg-point-list;
   }
   variant worker-global-scope-set-timeout-params {
-    handler-timeout-arguments(tuple<function, option<s32>, list<any>>),
+    handler-timeout-arguments(tuple<borrow<function>, option<s32>, list<any>>),
     handler-timeout-unused(tuple<string, option<s32>, list<any>>),
   }
   variant worker-global-scope-set-interval-params {
-    handler-timeout-arguments(tuple<function, option<s32>, list<any>>),
+    handler-timeout-arguments(tuple<borrow<function>, option<s32>, list<any>>),
     handler-timeout-unused(tuple<string, option<s32>, list<any>>),
   }
   variant worker-global-scope-create-image-bitmap-params {
@@ -11596,11 +11950,11 @@ interface global {
     a-image-a-sx-a-sy-a-sw-a-sh-a-options(tuple<image-bitmap-source, s32, s32, s32, s32, option<image-bitmap-options>>),
   }
   variant window-set-timeout-params {
-    handler-timeout-arguments(tuple<function, option<s32>, list<any>>),
+    handler-timeout-arguments(tuple<borrow<function>, option<s32>, list<any>>),
     handler-timeout-unused(tuple<string, option<s32>, list<any>>),
   }
   variant window-set-interval-params {
-    handler-timeout-arguments(tuple<function, option<s32>, list<any>>),
+    handler-timeout-arguments(tuple<borrow<function>, option<s32>, list<any>>),
     handler-timeout-unused(tuple<string, option<s32>, list<any>>),
   }
   variant window-create-image-bitmap-params {
@@ -11631,7 +11985,7 @@ interface global {
     clear: func();
     entries: func() -> font-face-set-iterator;
     values: func() -> font-face-set-iterator;
-    for-each: func(cb: font-face-set-for-each-callback, this-arg: any);
+    for-each: func(cb: borrow<font-face-set-for-each-callback>, this-arg: any);
     onloading: func() -> event-handler;
     set-onloading: func(onloading: event-handler);
     onloadingdone: func() -> event-handler;
@@ -11651,6 +12005,9 @@ interface global {
   }
   record gain-options {
     gain: option<f32>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource gain-node {
     as-audio-node: func() -> audio-node;
@@ -11661,7 +12018,7 @@ interface global {
     data: func() -> any;
     origin: func() -> string;
     last-event-id: func() -> string;
-    source: func() -> client-or-message-port-or-service-worker;
+    // source: func() -> client-or-message-port-or-service-worker;
     ports: func() -> list<message-port>;
   }
   variant client-or-message-port-or-service-worker {
@@ -11675,6 +12032,9 @@ interface global {
     last-event-id: option<string>,
     source: client-or-message-port-or-service-worker,
     ports: option<list<borrow<message-port>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum browser-find-case-sensitivity {
     case-sensitive,
@@ -11735,6 +12095,9 @@ interface global {
   record presentation-connection-close-event-init {
     reason: presentation-connection-closed-reason,
     message: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum css-style-sheet-parsing-mode {
     author,
@@ -11769,7 +12132,7 @@ interface global {
     application-server-key: func() -> array-buffer;
   }
   record rtc-certificate-expiration {
-    expires: option<dom-time-stamp>,
+    expires: option<borrow<dom-time-stamp>>,
   }
   resource rtc-certificate {
     expires: func() -> dom-time-stamp;
@@ -11795,8 +12158,8 @@ interface global {
     create-mutable-file: func(name: string, %type: option<string>) -> idb-request;
   }
   resource custom-element-registry {
-    define: func(name: string, function-constructor: function, options: option<element-definition-options>);
-    set-element-creation-callback: func(name: string, callback: custom-element-creation-callback);
+    define: func(name: string, function-constructor: borrow<function>, options: option<element-definition-options>);
+    set-element-creation-callback: func(name: string, callback: borrow<custom-element-creation-callback>);
     get: func(name: string) -> any;
     when-defined: func(name: string);
     upgrade: func(root: borrow<node>);
@@ -11843,6 +12206,9 @@ interface global {
   record wave-shaper-options {
     curve: option<list<f32>>,
     oversample: option<over-sample-type>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource wave-shaper-node {
     as-audio-node: func() -> audio-node;
@@ -11880,6 +12246,9 @@ interface global {
   }
   record channel-merger-options {
     number-of-inputs: option<u32>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource channel-merger-node {
     as-audio-node: func() -> audio-node;
@@ -11933,6 +12302,9 @@ interface global {
     status-code: option<u16>,
     line-number: option<s32>,
     column-number: option<s32>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   enum shadow-root-mode {
     open,
@@ -12186,9 +12558,15 @@ interface global {
   }
   record notification-event-init {
     notification: borrow<notification>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   record clipboard-event-init {
     clipboard-data: option<option<borrow<data-transfer>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource clipboard-event {
     as-event: func() -> event;
@@ -12228,6 +12606,24 @@ interface global {
     related-target: option<option<borrow<event-target>>>,
     movement-x: option<s32>,
     movement-y: option<s32>,
+    ctrl-key: option<bool>,
+    shift-key: option<bool>,
+    alt-key: option<bool>,
+    meta-key: option<bool>,
+    modifier-alt-graph: option<bool>,
+    modifier-caps-lock: option<bool>,
+    modifier-fn: option<bool>,
+    modifier-fn-lock: option<bool>,
+    modifier-num-lock: option<bool>,
+    modifier-os: option<bool>,
+    modifier-scroll-lock: option<bool>,
+    modifier-symbol: option<bool>,
+    modifier-symbol-lock: option<bool>,
+    view: option<option<borrow<window>>>,
+    detail: option<s32>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource hash-change-event {
     as-event: func() -> event;
@@ -12238,6 +12634,9 @@ interface global {
   record hash-change-event-init {
     old-url: option<string>,
     new-url: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource html-base-element {
     as-html-element: func() -> html-element;
@@ -12278,6 +12677,9 @@ interface global {
     acceleration-including-gravity: option<device-acceleration-init>,
     rotation-rate: option<device-rotation-rate-init>,
     interval: option<f64>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource custom-event {
     as-event: func() -> event;
@@ -12286,14 +12688,35 @@ interface global {
   }
   record custom-event-init {
     detail: any,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource file-system-directory-reader {
-    read-entries: func(success-callback: file-system-entries-callback, error-callback: option<error-callback>);
+    read-entries: func(success-callback: borrow<file-system-entries-callback>, error-callback: option<borrow<error-callback>>);
   }
   record touch-event-init {
     touches: option<list<borrow<touch>>>,
     target-touches: option<list<borrow<touch>>>,
     changed-touches: option<list<borrow<touch>>>,
+    ctrl-key: option<bool>,
+    shift-key: option<bool>,
+    alt-key: option<bool>,
+    meta-key: option<bool>,
+    modifier-alt-graph: option<bool>,
+    modifier-caps-lock: option<bool>,
+    modifier-fn: option<bool>,
+    modifier-fn-lock: option<bool>,
+    modifier-num-lock: option<bool>,
+    modifier-os: option<bool>,
+    modifier-scroll-lock: option<bool>,
+    modifier-symbol: option<bool>,
+    modifier-symbol-lock: option<bool>,
+    view: option<option<borrow<window>>>,
+    detail: option<s32>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource touch-event {
     as-ui-event: func() -> ui-event;
@@ -12404,7 +12827,7 @@ interface global {
     clear: func();
   }
   variant data-transfer-item-list-add-params {
-    data-%type(tuple<string, string>),
+    data-type(tuple<string, string>),
     data(borrow<file>),
   }
   enum speech-synthesis-error-code {
@@ -12431,6 +12854,9 @@ interface global {
     char-length: option<u32>,
     elapsed-time: option<f32>,
     name: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource text-track-cue {
     as-event-target: func() -> event-target;
@@ -12582,20 +13008,26 @@ interface global {
   }
   record tcp-socket-event-init {
     data: any,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   record media-stream-event-init {
-    stream: option<option<borrow<media-stream>>>,
+    %stream: option<option<borrow<media-stream>>>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource media-stream-event {
     as-event: func() -> event;
-    stream: func() -> option<media-stream>;
+    %stream: func() -> option<media-stream>;
   }
   type blob-part = blob-or-buffer-source-or-string;
   resource blob {
     size: func() -> u64;
     %type: func() -> string;
     slice: func(start: option<s64>, end: option<s64>, content-type: option<string>) -> blob;
-    stream: func() -> readable-stream;
+    %stream: func() -> readable-stream;
     text: func() -> string;
     array-buffer: func() -> array-buffer;
   }
@@ -12625,6 +13057,9 @@ interface global {
     selection-visible: option<bool>,
     selection-editable: option<bool>,
     selected-text-content: option<string>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource caret-state-changed-event {
     as-event: func() -> event;
@@ -12640,6 +13075,9 @@ interface global {
   record delay-options {
     max-delay-time: option<f64>,
     delay-time: option<f64>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource delay-node {
     as-audio-node: func() -> audio-node;
@@ -12736,7 +13174,7 @@ interface global {
   }
   resource keyframe-effect {
     as-animation-effect: func() -> animation-effect;
-    target: func() -> css-pseudo-element-or-element;
+    // target: func() -> css-pseudo-element-or-element;
     set-target: func(target: css-pseudo-element-or-element);
     iteration-composite: func() -> iteration-composite-operation;
     set-iteration-composite: func(iteration-composite: iteration-composite-operation);
@@ -12835,8 +13273,8 @@ interface global {
     capture: option<bool>,
   }
   resource event-target {
-    add-event-listener: func(%type: string, listener: event-listener, options: add-event-listener-options-or-bool, wants-untrusted: option<bool>);
-    remove-event-listener: func(%type: string, listener: event-listener, options: bool-or-event-listener-options);
+    add-event-listener: func(%type: string, listener: borrow<event-listener>, options: add-event-listener-options-or-bool, wants-untrusted: option<bool>);
+    remove-event-listener: func(%type: string, listener: borrow<event-listener>, options: bool-or-event-listener-options);
     dispatch-event: func(event: borrow<event>) -> bool;
   }
   variant add-event-listener-options-or-bool {
@@ -12888,6 +13326,15 @@ interface global {
   }
   record drag-event-init {
     data-transfer: option<option<borrow<data-transfer>>>,
+    screen-x: option<s32>,
+    screen-y: option<s32>,
+    client-x: option<s32>,
+    client-y: option<s32>,
+    button: option<s16>,
+    buttons: option<u16>,
+    related-target: option<option<borrow<event-target>>>,
+    movement-x: option<s32>,
+    movement-y: option<s32>,
   }
   resource notify-paint-event {
     as-event: func() -> event;
@@ -12940,6 +13387,9 @@ interface global {
     plugin-filename: option<string>,
     submitted-crash-report: option<bool>,
     gmp-plugin: option<bool>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource image-document {
     as-html-document: func() -> html-document;
@@ -12972,6 +13422,11 @@ interface global {
   }
   record composition-event-init {
     data: option<string>,
+    view: option<option<borrow<window>>>,
+    detail: option<s32>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource ui-event {
     as-event: func() -> event;
@@ -12991,6 +13446,9 @@ interface global {
   record ui-event-init {
     view: option<option<borrow<window>>>,
     detail: option<s32>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   record event-modifier-init {
     ctrl-key: option<bool>,
@@ -13006,6 +13464,11 @@ interface global {
     modifier-scroll-lock: option<bool>,
     modifier-symbol: option<bool>,
     modifier-symbol-lock: option<bool>,
+    view: option<option<borrow<window>>>,
+    detail: option<s32>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   record document-timeline-options {
     origin-time: option<dom-high-res-time-stamp>,
@@ -13015,7 +13478,7 @@ interface global {
   }
   resource rtc-peer-connection-ice-error-event {
     as-event: func() -> event;
-    constructor(%type: string, event-init-dict: rtc-peer-connection-ice-error-event-init);
+    constructor(%type: string, event-init-dict: borrow<rtc-peer-connection-ice-error-event-init>);
     address: func() -> string;
     port: func() -> u16;
     url: func() -> string;
@@ -13038,6 +13501,9 @@ interface global {
     detune: option<f32>,
     frequency: option<f32>,
     gain: option<f32>,
+    channel-count: option<u32>,
+    channel-count-mode: option<channel-count-mode>,
+    channel-interpretation: option<channel-interpretation>,
   }
   resource biquad-filter-node {
     as-audio-node: func() -> audio-node;
@@ -13092,8 +13558,8 @@ interface global {
     adopt-node: func(node: borrow<node>) -> node;
     create-event: func(%interface: string) -> event;
     create-range: func() -> range;
-    create-node-iterator: func(root: borrow<node>, what-to-show: option<u32>, filter: option<option<node-filter>>) -> node-iterator;
-    create-tree-walker: func(root: borrow<node>, what-to-show: option<u32>, filter: option<option<node-filter>>) -> tree-walker;
+    create-node-iterator: func(root: borrow<node>, what-to-show: option<u32>, filter: option<option<borrow<node-filter>>>) -> node-iterator;
+    create-tree-walker: func(root: borrow<node>, what-to-show: option<u32>, filter: option<option<borrow<node-filter>>>) -> tree-walker;
     create-cdata-section: func(data: string) -> cdata-section;
     create-attribute: func(name: string) -> attr;
     create-attribute-ns: func(namespace: string, name: string) -> attr;
@@ -13163,14 +13629,14 @@ interface global {
     is-srcdoc-document: func() -> bool;
     sandbox-flags-as-string: func() -> string;
     insert-anonymous-content: func(a-element: borrow<element>) -> anonymous-content;
-    remove-anonymous-content: func(a-content: anonymous-content);
+    remove-anonymous-content: func(a-content: borrow<anonymous-content>);
     get-selection: func() -> option<selection>;
     user-has-interacted: func() -> bool;
     notify-user-gesture-activation: func();
     document-flash-classification: func() -> flash-classification;
-    create-expression: func(expression: string, resolver: option<option<x-path-ns-resolver>>) -> x-path-expression;
+    create-expression: func(expression: string, resolver: option<option<borrow<x-path-ns-resolver>>>) -> x-path-expression;
     create-ns-resolver: func(node-resolver: borrow<node>) -> node;
-    evaluate: func(expression: string, context-node: borrow<node>, resolver: option<option<x-path-ns-resolver>>, %type: option<u16>, %result: option<object>) -> x-path-result;
+    evaluate: func(expression: string, context-node: borrow<node>, resolver: option<option<borrow<x-path-ns-resolver>>>, %type: option<u16>, %result: option<object>) -> x-path-result;
     onabort: func() -> event-handler;
     set-onabort: func(onabort: event-handler);
     onblur: func() -> event-handler;
@@ -13359,9 +13825,9 @@ interface global {
     onerror: func() -> event-handler;
     set-onerror: func(onerror: event-handler);
     get-box-quads: func(options: option<box-quad-options>) -> list<dom-quad>;
-    convert-quad-from-node: func(quad: borrow<dom-quad>, from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
-    convert-rect-from-node: func(rect: borrow<dom-rect-read-only>, from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
-    convert-point-from-node: func(point: dom-point-init, from: geometry-node, options: option<convert-coordinate-options>) -> dom-point;
+    convert-quad-from-node: func(quad: borrow<dom-quad>, %from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
+    convert-rect-from-node: func(rect: borrow<dom-rect-read-only>, %from: geometry-node, options: option<convert-coordinate-options>) -> dom-quad;
+    convert-point-from-node: func(point: dom-point-init, %from: geometry-node, options: option<convert-coordinate-options>) -> dom-point;
     fonts: func() -> font-face-set;
     element-from-point: func(x: f32, y: f32) -> option<element>;
     elements-from-point: func(x: f32, y: f32) -> list<element>;
@@ -13419,10 +13885,13 @@ interface global {
   record payment-method-change-event-init {
     method-name: string,
     method-details: option<object>,
+    bubbles: option<bool>,
+    cancelable: option<bool>,
+    composed: option<bool>,
   }
   resource media-stream-audio-destination-node {
     as-audio-node: func() -> audio-node;
-    stream: func() -> media-stream;
+    %stream: func() -> media-stream;
   }
   type performance-entry-list = list<performance-entry>;
   resource performance {
