@@ -13,16 +13,16 @@ cargo install wasm-tools
 ```
 
 
-### Available examples
+### Available Rust examples
 - basic
 
 
-### compile an example
+### compile a Rust example
 ```shell
-cd examples/[example]
+cd examples/rust-[example]
 cargo build --release --target wasm32-unknown-unknown
 wasm-tools component new ./target/wasm32-unknown-unknown/release/[example].wasm -o ./target/[example]-component.wasm
-jco transpile ./target/[example]-component.wasm -o static --map 'web:browser/global=../../imports.js#global'
+jco transpile ./target/[example]-component.wasm -o static --map 'webidl:browser/global=../../imports.js#global'
 ```
 
 ### Server the example

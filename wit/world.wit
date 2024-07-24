@@ -1,6 +1,6 @@
-package web:browser;
+package webidl:browser;
 
 world browser {
-    import global;
+    include window;
     export start: func();
 }

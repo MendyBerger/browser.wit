@@ -1,4 +1,4 @@
-package web:browser;
+package webidl:browser;
 
 world service-worker-global-scope {
   import global;
@@ -1597,11 +1597,11 @@ interface global {
   }
   variant source-buffer-append-buffer-params {
     data(array-buffer),
-    data(array-buffer-view),
+    // data(array-buffer-view),
   }
   variant source-buffer-append-buffer-async-params {
     data(array-buffer),
-    data(array-buffer-view),
+    // data(array-buffer-view),
   }
   resource media-query-list-event {
     as-event: func() -> event;
@@ -2757,15 +2757,15 @@ interface global {
     is-context-lost: func() -> bool;
     get-supported-extensions: func() -> list<option<string>>;
     get-extension: func(name: string) -> object;
-    active-texture: func(texture: g-lenum);
+    // active-texture: func(texture: g-lenum);
     attach-shader: func(program: borrow<web-gl-program>, shader: borrow<web-gl-shader>);
     bind-attrib-location: func(program: borrow<web-gl-program>, index: g-luint, name: string);
     bind-buffer: func(target: g-lenum, buffer: option<borrow<web-gl-buffer>>);
     bind-framebuffer: func(target: g-lenum, framebuffer: option<borrow<web-gl-framebuffer>>);
     bind-renderbuffer: func(target: g-lenum, renderbuffer: option<borrow<web-gl-renderbuffer>>);
     bind-texture: func(target: g-lenum, texture: option<borrow<web-gl-texture>>);
-    blend-color: func(red: g-lfloat, green: g-lfloat, blue: g-lfloat, alpha: g-lfloat);
-    blend-equation: func(mode: g-lenum);
+    // blend-color: func(red: g-lfloat, green: g-lfloat, blue: g-lfloat, alpha: g-lfloat);
+    // blend-equation: func(mode: g-lenum);
     blend-equation-separate: func(mode-rgb: g-lenum, mode-alpha: g-lenum);
     blend-func: func(sfactor: g-lenum, dfactor: g-lenum);
     blend-func-separate: func(src-rgb: g-lenum, dst-rgb: g-lenum, src-alpha: g-lenum, dst-alpha: g-lenum);
@@ -2784,16 +2784,16 @@ interface global {
     create-renderbuffer: func() -> option<web-gl-renderbuffer>;
     create-shader: func(%type: g-lenum) -> option<web-gl-shader>;
     create-texture: func() -> option<web-gl-texture>;
-    cull-face: func(mode: g-lenum);
+    // cull-face: func(mode: g-lenum);
     delete-buffer: func(buffer: option<borrow<web-gl-buffer>>);
     delete-framebuffer: func(framebuffer: option<borrow<web-gl-framebuffer>>);
     delete-program: func(program: option<borrow<web-gl-program>>);
     delete-renderbuffer: func(renderbuffer: option<borrow<web-gl-renderbuffer>>);
     delete-shader: func(shader: option<borrow<web-gl-shader>>);
     delete-texture: func(texture: option<borrow<web-gl-texture>>);
-    depth-func: func(%func: g-lenum);
+    // depth-func: func(%func: g-lenum);
     depth-mask: func(flag: g-lboolean);
-    depth-range: func(z-near: g-lclampf, z-far: g-lclampf);
+    // depth-range: func(z-near: g-lclampf, z-far: g-lclampf);
     detach-shader: func(program: borrow<web-gl-program>, shader: borrow<web-gl-shader>);
     disable: func(cap: g-lenum);
     disable-vertex-attrib-array: func(index: g-luint);
@@ -2805,7 +2805,7 @@ interface global {
     flush: func();
     framebuffer-renderbuffer: func(target: g-lenum, attachment: g-lenum, renderbuffertarget: g-lenum, renderbuffer: option<borrow<web-gl-renderbuffer>>);
     framebuffer-texture2-d: func(target: g-lenum, attachment: g-lenum, textarget: g-lenum, texture: option<borrow<web-gl-texture>>, level: g-lint);
-    front-face: func(mode: g-lenum);
+    // front-face: func(mode: g-lenum);
     generate-mipmap: func(target: g-lenum);
     get-active-attrib: func(program: borrow<web-gl-program>, index: g-luint) -> option<web-gl-active-info>;
     get-active-uniform: func(program: borrow<web-gl-program>, index: g-luint) -> option<web-gl-active-info>;
@@ -2835,15 +2835,15 @@ interface global {
     is-renderbuffer: func(renderbuffer: option<borrow<web-gl-renderbuffer>>) -> g-lboolean;
     is-shader: func(shader: option<borrow<web-gl-shader>>) -> g-lboolean;
     is-texture: func(texture: option<borrow<web-gl-texture>>) -> g-lboolean;
-    line-width: func(width: g-lfloat);
+    // line-width: func(width: g-lfloat);
     link-program: func(program: borrow<web-gl-program>);
     pixel-storei: func(pname: g-lenum, param: g-lint);
     polygon-offset: func(factor: g-lfloat, units: g-lfloat);
     renderbuffer-storage: func(target: g-lenum, internalformat: g-lenum, width: g-lsizei, height: g-lsizei);
-    sample-coverage: func(value: g-lclampf, invert: g-lboolean);
+    // sample-coverage: func(value: g-lclampf, invert: g-lboolean);
     scissor: func(x: g-lint, y: g-lint, width: g-lsizei, height: g-lsizei);
     shader-source: func(shader: borrow<web-gl-shader>, source: string);
-    stencil-func: func(%func: g-lenum, ref: g-lint, mask: g-luint);
+    // stencil-func: func(%func: g-lenum, ref: g-lint, mask: g-luint);
     stencil-func-separate: func(face: g-lenum, %func: g-lenum, ref: g-lint, mask: g-luint);
     stencil-mask: func(mask: g-luint);
     stencil-mask-separate: func(face: g-lenum, mask: g-luint);
@@ -2870,22 +2870,22 @@ interface global {
     vertex-attrib4f: func(indx: g-luint, x: g-lfloat, y: g-lfloat, z: g-lfloat, w: g-lfloat);
     vertex-attrib4fv: func(indx: g-luint, values: float32-list);
     vertex-attrib-pointer: func(indx: g-luint, size: g-lint, %type: g-lenum, normalized: g-lboolean, stride: g-lsizei, offset: g-lintptr);
-    viewport: func(x: g-lint, y: g-lint, width: g-lsizei, height: g-lsizei);
+    // viewport: func(x: g-lint, y: g-lint, width: g-lsizei, height: g-lsizei);
     commit: func();
   }
   variant web-gl-rendering-context-buffer-data-params {
     target-size-usage(tuple<g-lenum, g-lsizeiptr, g-lenum>),
-    target-data-usage(tuple<g-lenum, array-buffer, g-lenum>),
-    target-data-usage(tuple<g-lenum, array-buffer-view, g-lenum>),
+    // target-data-usage(tuple<g-lenum, array-buffer, g-lenum>),
+    // target-data-usage(tuple<g-lenum, array-buffer-view, g-lenum>),
   }
   variant web-gl-rendering-context-buffer-sub-data-params {
     target-offset-data(tuple<g-lenum, g-lintptr, array-buffer>),
-    target-offset-data(tuple<g-lenum, g-lintptr, array-buffer-view>),
+    // target-offset-data(tuple<g-lenum, g-lintptr, array-buffer-view>),
   }
   variant web-gl-rendering-context-tex-image2-d-params {
     target-level-internalformat-width-height-border-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view>),
     target-level-internalformat-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-internalformat-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    // target-level-internalformat-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
     target-level-internalformat-format-type-image(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
     target-level-internalformat-format-type-canvas(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
     target-level-internalformat-format-type-video(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
@@ -2894,7 +2894,7 @@ interface global {
   variant web-gl-rendering-context-tex-sub-image2-d-params {
     target-level-xoffset-yoffset-width-height-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view>),
     target-level-xoffset-yoffset-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-xoffset-yoffset-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    // target-level-xoffset-yoffset-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
     target-level-xoffset-yoffset-format-type-image(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
     target-level-xoffset-yoffset-format-type-canvas(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
     target-level-xoffset-yoffset-format-type-video(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
@@ -3815,7 +3815,7 @@ interface global {
     framebuffer-texture-layer: func(target: g-lenum, attachment: g-lenum, texture: option<borrow<web-gl-texture>>, level: g-lint, layer: g-lint);
     invalidate-framebuffer: func(target: g-lenum, attachments: list<g-lenum>);
     invalidate-sub-framebuffer: func(target: g-lenum, attachments: list<g-lenum>, x: g-lint, y: g-lint, width: g-lsizei, height: g-lsizei);
-    read-buffer: func(src: g-lenum);
+    // read-buffer: func(src: g-lenum);
     get-internalformat-parameter: func(target: g-lenum, internalformat: g-lenum, pname: g-lenum) -> any;
     renderbuffer-storage-multisample: func(target: g-lenum, samples: g-lsizei, internalformat: g-lenum, width: g-lsizei, height: g-lsizei);
     tex-storage2-d: func(target: g-lenum, levels: g-lsizei, internalformat: g-lenum, width: g-lsizei, height: g-lsizei);
@@ -3896,7 +3896,7 @@ interface global {
     bind-transform-feedback: func(target: g-lenum, tf: option<borrow<web-gl-transform-feedback>>);
     begin-transform-feedback: func(primitive-mode: g-lenum);
     end-transform-feedback: func();
-    transform-feedback-varyings: func(program: borrow<web-gl-program>, varyings: list<string>, buffer-mode: g-lenum);
+    // transform-feedback-varyings: func(program: borrow<web-gl-program>, varyings: list<string>, buffer-mode: g-lenum);
     get-transform-feedback-varying: func(program: borrow<web-gl-program>, index: g-luint) -> option<web-gl-active-info>;
     pause-transform-feedback: func();
     resume-transform-feedback: func();
@@ -3908,7 +3908,7 @@ interface global {
     get-uniform-block-index: func(program: borrow<web-gl-program>, uniform-block-name: string) -> g-luint;
     get-active-uniform-block-parameter: func(program: borrow<web-gl-program>, uniform-block-index: g-luint, pname: g-lenum) -> any;
     get-active-uniform-block-name: func(program: borrow<web-gl-program>, uniform-block-index: g-luint) -> string;
-    uniform-block-binding: func(program: borrow<web-gl-program>, uniform-block-index: g-luint, uniform-block-binding: g-luint);
+    // uniform-block-binding: func(program: borrow<web-gl-program>, uniform-block-index: g-luint, uniform-block-binding: g-luint);
     create-vertex-array: func() -> option<web-gl-vertex-array-object>;
     delete-vertex-array: func(vertex-array: option<borrow<web-gl-vertex-array-object>>);
     is-vertex-array: func(vertex-array: option<borrow<web-gl-vertex-array-object>>) -> g-lboolean;
@@ -3917,67 +3917,67 @@ interface global {
   variant web-gl2-rendering-context-buffer-data-params {
     target-size-usage(tuple<g-lenum, g-lsizeiptr, g-lenum>),
     target-src-data-usage(tuple<g-lenum, array-buffer, g-lenum>),
-    target-src-data-usage(tuple<g-lenum, array-buffer-view, g-lenum>),
+    // target-src-data-usage(tuple<g-lenum, array-buffer-view, g-lenum>),
     target-src-data-usage-src-offset-length(tuple<g-lenum, array-buffer-view, g-lenum, g-luint, option<g-luint>>),
   }
   variant web-gl2-rendering-context-buffer-sub-data-params {
     target-offset-src-data(tuple<g-lenum, g-lintptr, array-buffer>),
-    target-offset-src-data(tuple<g-lenum, g-lintptr, array-buffer-view>),
+    // target-offset-src-data(tuple<g-lenum, g-lintptr, array-buffer-view>),
     target-dst-byte-offset-src-data-src-offset-length(tuple<g-lenum, g-lintptr, array-buffer-view, g-luint, option<g-luint>>),
   }
   variant web-gl2-rendering-context-tex-image2-d-params {
     target-level-internalformat-width-height-border-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view>),
     target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
-    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    // target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    // target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    // target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
+    // target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    // target-level-internalformat-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
     target-level-internalformat-width-height-border-format-type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, g-lintptr>),
     target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
-    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    // target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    // target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    // target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
+    // target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    // target-level-internalformat-width-height-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-data>>),
     target-level-internalformat-width-height-border-format-type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view, g-luint>),
   }
   variant web-gl2-rendering-context-tex-image3-d-params {
     target-level-internalformat-width-height-depth-border-format-type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, g-lintptr>),
     target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
-    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    // target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    // target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    // target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
+    // target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    // target-level-internalformat-width-height-depth-border-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, borrow<image-data>>),
     target-level-internalformat-width-height-depth-border-format-type-src-data(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view>),
     target-level-internalformat-width-height-depth-border-format-type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lint, g-lenum, g-lenum, array-buffer-view, g-luint>),
   }
   variant web-gl2-rendering-context-tex-sub-image2-d-params {
     target-level-xoffset-yoffset-width-height-format-type-pixels(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view>),
     target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
-    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
+    // target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-image-element>>),
+    // target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<html-video-element>>),
+    // target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<video-frame>>),
+    // target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-bitmap>>),
+    // target-level-xoffset-yoffset-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lenum, g-lenum, borrow<image-data>>),
     target-level-xoffset-yoffset-width-height-format-type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, g-lintptr>),
     target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<video-frame>>),
-    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-data>>),
+    // target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-image-element>>),
+    // target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-video-element>>),
+    // target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<video-frame>>),
+    // target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-bitmap>>),
+    // target-level-xoffset-yoffset-width-height-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-data>>),
     target-level-xoffset-yoffset-width-height-format-type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view, g-luint>),
   }
   variant web-gl2-rendering-context-tex-sub-image3-d-params {
     target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-pbo-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, g-lintptr>),
     target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-canvas-element>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-image-element>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-video-element>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<video-frame>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-bitmap>>),
-    target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-data>>),
+    // target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-image-element>>),
+    // target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<html-video-element>>),
+    // target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<video-frame>>),
+    // target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-bitmap>>),
+    // target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-source(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, borrow<image-data>>),
     target-level-xoffset-yoffset-zoffset-width-height-depth-format-type-src-data-src-offset(tuple<g-lenum, g-lint, g-lint, g-lint, g-lint, g-lsizei, g-lsizei, g-lsizei, g-lenum, g-lenum, array-buffer-view, option<g-luint>>),
   }
   variant web-gl2-rendering-context-compressed-tex-image2-d-params {
@@ -4331,9 +4331,9 @@ interface global {
   }
   variant rtc-data-channel-send-params {
     data(string),
-    data(borrow<blob>),
-    data(array-buffer),
-    data(array-buffer-view),
+    // data(borrow<blob>),
+    // data(array-buffer),
+    // data(array-buffer-view),
   }
   resource gamepad-pose {
     has-orientation: func() -> bool;
@@ -5451,8 +5451,8 @@ interface global {
     id: option<u16>,
     max-retransmit-time: option<u16>,
   }
-  record rtc-offer-answer-options {  }
-  record rtc-answer-options {  }
+  // record rtc-offer-answer-options {  }
+  // record rtc-answer-options {  }
   record rtc-offer-options {
     offer-to-receive-video: option<bool>,
     offer-to-receive-audio: option<bool>,
@@ -5464,7 +5464,7 @@ interface global {
     set-identity-provider: func(provider: string, options: option<rtc-identity-provider-options>);
     get-identity-assertion: func() -> string;
     create-offer: func(options: option<rtc-offer-options>) -> rtc-session-description-init;
-    create-answer: func(options: option<rtc-answer-options>) -> rtc-session-description-init;
+    // create-answer: func(options: option<rtc-answer-options>) -> rtc-session-description-init;
     set-local-description: func(description: rtc-session-description-init);
     set-remote-description: func(description: rtc-session-description-init);
     local-description: func() -> option<rtc-session-description>;
@@ -9764,9 +9764,9 @@ interface global {
   }
   variant web-socket-send-params {
     data(string),
-    data(borrow<blob>),
-    data(array-buffer),
-    data(array-buffer-view),
+    // data(borrow<blob>),
+    // data(array-buffer),
+    // data(array-buffer-view),
   }
   resource svg-unit-types {
     SVG-UNIT-TYPE-UNKNOWN: static func() -> u16;
@@ -10930,8 +10930,8 @@ interface global {
     destination(borrow<audio-node>),
     destination-output(tuple<borrow<audio-node>, u32>),
     destination-output-input(tuple<borrow<audio-node>, u32, u32>),
-    destination(borrow<audio-param>),
-    destination-output(tuple<borrow<audio-param>, u32>),
+    // destination(borrow<audio-param>),
+    // destination-output(tuple<borrow<audio-param>, u32>),
   }
   record convolver-options {
     buffer: option<option<borrow<audio-buffer>>>,
@@ -11330,9 +11330,9 @@ interface global {
   }
   variant presentation-connection-send-params {
     data(string),
-    data(borrow<blob>),
-    data(array-buffer),
-    data(array-buffer-view),
+    // data(borrow<blob>),
+    // data(array-buffer),
+    // data(array-buffer-view),
   }
   record svg-bounding-box-options {
     fill: option<bool>,
