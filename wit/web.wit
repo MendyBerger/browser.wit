@@ -1,4 +1,4 @@
-package webidl:browser;
+package web:browser;
 
 world service-worker-global-scope {
   import global;
@@ -21,6 +21,8 @@ world window {
 }
 
 interface global {
+  use wasi:io/poll@0.2.2.{pollable};
+
   resource lifecycle-connected-callback {
   }
   resource lifecycle-disconnected-callback {
@@ -513,7 +515,7 @@ interface global {
     set-length: func(length: u32);
     item: func(index: u32) -> option<element>;
     named-item: func(name: string) -> option<html-option-element>;
-    add: func(element: html-opt-group-element-or-html-option-element, before: html-element-or-s32);
+    add: func(element: html-opt-group-element-or-html-option-element, before: option<html-element-or-s32>);
     selected-options: func() -> html-collection;
     selected-index: func() -> s32;
     set-selected-index: func(selected-index: s32);
@@ -696,8 +698,8 @@ interface global {
     %string(string),
   }
   record constrain-dom-string-parameters {
-    exact: list-string-or-string,
-    ideal: list-string-or-string,
+    exact: option<list-string-or-string>,
+    ideal: option<list-string-or-string>,
   }
   resource error-event {
     as-event: func() -> event;
@@ -926,7 +928,7 @@ interface global {
     bezier-curve-to: func(cp1x: f64, cp1y: f64, cp2x: f64, cp2y: f64, x: f64, y: f64);
     arc-to: func(x1: f64, y1: f64, x2: f64, y2: f64, radius: f64);
     rect: func(x: f64, y: f64, w: f64, h: f64);
-    round-rect: func(x: f64, y: f64, w: f64, h: f64, radii: dom-point-init-or-f64-or-list-dom-point-init-or-f64);
+    round-rect: func(x: f64, y: f64, w: f64, h: f64, radii: option<dom-point-init-or-f64-or-list-dom-point-init-or-f64>);
     arc: func(x: f64, y: f64, radius: f64, start-angle: f64, end-angle: f64, anticlockwise: option<bool>);
     ellipse: func(x: f64, y: f64, radius-x: f64, radius-y: f64, rotation: f64, start-angle: f64, end-angle: f64, anticlockwise: option<bool>);
     add-hit-region: func(options: option<hit-region-options>);
@@ -1007,7 +1009,7 @@ interface global {
     bezier-curve-to: func(cp1x: f64, cp1y: f64, cp2x: f64, cp2y: f64, x: f64, y: f64);
     arc-to: func(x1: f64, y1: f64, x2: f64, y2: f64, radius: f64);
     rect: func(x: f64, y: f64, w: f64, h: f64);
-    round-rect: func(x: f64, y: f64, w: f64, h: f64, radii: dom-point-init-or-f64-or-list-dom-point-init-or-f64);
+    round-rect: func(x: f64, y: f64, w: f64, h: f64, radii: option<dom-point-init-or-f64-or-list-dom-point-init-or-f64>);
     arc: func(x: f64, y: f64, radius: f64, start-angle: f64, end-angle: f64, anticlockwise: option<bool>);
     ellipse: func(x: f64, y: f64, radius-x: f64, radius-y: f64, rotation: f64, start-angle: f64, end-angle: f64, anticlockwise: option<bool>);
   }
@@ -1709,7 +1711,7 @@ interface global {
     %type: write-command-type,
     size: option<u64>,
     position: option<u64>,
-    data: blob-or-buffer-source-or-string,
+    data: option<blob-or-buffer-source-or-string>,
   }
   variant blob-or-buffer-source-or-string-or-write-params {
     blob(borrow<blob>),
@@ -3443,7 +3445,7 @@ interface global {
     as-html-collection: func() -> html-collection;
     length: func() -> u32;
     set-length: func(length: u32);
-    add: func(element: html-opt-group-element-or-html-option-element, before: html-element-or-s32);
+    add: func(element: html-opt-group-element-or-html-option-element, before: option<html-element-or-s32>);
     remove: func(index: s32);
     selected-index: func() -> s32;
     set-selected-index: func(selected-index: s32);
@@ -4254,15 +4256,15 @@ interface global {
     media-track-constraints(media-track-constraints),
   }
   record media-stream-constraints {
-    audio: bool-or-media-track-constraints,
-    video: bool-or-media-track-constraints,
+    audio: option<bool-or-media-track-constraints>,
+    video: option<bool-or-media-track-constraints>,
     picture: option<bool>,
     fake: option<bool>,
     peer-identity: option<string>,
   }
   record display-media-stream-constraints {
-    video: bool-or-media-track-constraints,
-    audio: bool-or-media-track-constraints,
+    video: option<bool-or-media-track-constraints>,
+    audio: option<bool-or-media-track-constraints>,
   }
   resource media-stream {
     as-event-target: func() -> event-target;
@@ -4411,7 +4413,7 @@ interface global {
   record intersection-observer-init {
     root: option<option<borrow<element>>>,
     root-margin: option<string>,
-    threshold: f64-or-list-f64,
+    threshold: option<f64-or-list-f64>,
   }
   enum midi-port-type {
     input,
@@ -5259,7 +5261,7 @@ interface global {
     token,
   }
   record rtc-ice-server {
-    urls: list-string-or-string,
+    urls: option<list-string-or-string>,
     url: option<string>,
     username: option<string>,
     credential: option<string>,
@@ -5681,6 +5683,7 @@ interface global {
     set-align: func(align: string);
   }
   resource console {
+    print: func(s: string);
     assert: func(condition: option<bool>, data: list<any>);
     clear: func();
     count: func(label: option<string>);
@@ -5711,8 +5714,8 @@ interface global {
     %u64(u64),
   }
   record console-event {
-    id: string-or-u64,
-    inner-id: string-or-u64,
+    id: option<string-or-u64>,
+    inner-id: option<string-or-u64>,
     console-id: option<string>,
     addon-id: option<string>,
     level: option<string>,
@@ -6084,6 +6087,7 @@ interface global {
   }
   resource html-element {
     as-element: func() -> element;
+    as-html-input-element: func() -> html-input-element;
     title: func() -> string;
     set-title: func(title: string);
     scroll-height: func() -> s32;
@@ -6138,6 +6142,7 @@ interface global {
     set-onchange: func(onchange: event-handler);
     onclick: func() -> event-handler;
     set-onclick: func(onclick: event-handler);
+    onclick-subscribe: func() -> pollable;
     onclose: func() -> event-handler;
     set-onclose: func(onclose: event-handler);
     oncontextmenu: func() -> event-handler;
@@ -8468,6 +8473,8 @@ interface global {
     create-image-bitmap: func(params: window-create-image-bitmap-params) -> image-bitmap;
     request-animation-frame: func(callback: borrow<frame-request-callback>) -> s32;
     cancel-animation-frame: func(handle: s32);
+    define-element: func(name: string, options: define-element-options) -> define-element-result;
+    console: func() -> console;
   }
   variant window-alert-params {
     message(string),
@@ -8550,6 +8557,7 @@ interface global {
   }
   resource element {
     as-node: func() -> node;
+    as-html-element: func() -> html-element;
     namespace-uri: func() -> string;
     prefix: func() -> string;
     local-name: func() -> string;
@@ -8600,7 +8608,7 @@ interface global {
     get-transform-to-viewport: func() -> dom-matrix-read-only;
     get-client-rects: func() -> dom-rect-list;
     get-bounding-client-rect: func() -> dom-rect;
-    scroll-into-view: func(arg: bool-or-scroll-into-view-options);
+    scroll-into-view: func(arg: option<bool-or-scroll-into-view-options>);
     scroll-top: func() -> s32;
     set-scroll-top: func(scroll-top: s32);
     scroll-left: func() -> s32;
@@ -9296,7 +9304,7 @@ interface global {
     with-credentials: func() -> bool;
     set-with-credentials: func(with-credentials: bool);
     upload: func() -> xml-http-request-upload;
-    send: func(body: body-init-or-document);
+    send: func(body: option<body-init-or-document>);
     abort: func();
     response-url: func() -> string;
     status: func() -> u16;
@@ -9456,7 +9464,7 @@ interface global {
     %f64(f64),
   }
   record audio-context-options {
-    latency-hint: audio-context-latency-category-or-f64,
+    latency-hint: option<audio-context-latency-category-or-f64>,
     sample-rate: option<f32>,
   }
   resource audio-context {
@@ -9607,9 +9615,9 @@ interface global {
     option-composite-operation(option<composite-operation>),
   }
   record base-property-indexed-keyframe {
-    offset: f64-or-list-f64,
-    easing: list-string-or-string,
-    composite: list-option-composite-operation-or-option-composite-operation,
+    offset: option<f64-or-list-f64>,
+    easing: option<list-string-or-string>,
+    composite: option<list-option-composite-operation-or-option-composite-operation>,
   }
   record base-keyframe {
     offset: option<f64>,
@@ -10685,7 +10693,7 @@ interface global {
     stop: func();
   }
   record idb-object-store-parameters {
-    key-path: list-string-or-string,
+    key-path: option<list-string-or-string>,
     auto-increment: option<bool>,
   }
   resource idb-object-store {
@@ -11453,7 +11461,7 @@ interface global {
     bezier-curve-to: func(cp1x: f64, cp1y: f64, cp2x: f64, cp2y: f64, x: f64, y: f64);
     arc-to: func(x1: f64, y1: f64, x2: f64, y2: f64, radius: f64);
     rect: func(x: f64, y: f64, w: f64, h: f64);
-    round-rect: func(x: f64, y: f64, w: f64, h: f64, radii: dom-point-init-or-f64-or-list-dom-point-init-or-f64);
+    round-rect: func(x: f64, y: f64, w: f64, h: f64, radii: option<dom-point-init-or-f64-or-list-dom-point-init-or-f64>);
     arc: func(x: f64, y: f64, radius: f64, start-angle: f64, end-angle: f64, anticlockwise: option<bool>);
     ellipse: func(x: f64, y: f64, radius-x: f64, radius-y: f64, rotation: f64, start-angle: f64, end-angle: f64, anticlockwise: option<bool>);
   }
@@ -11593,7 +11601,7 @@ interface global {
     fill: option<fill-mode>,
     iteration-start: option<f64>,
     iterations: option<f64>,
-    duration: f64-or-string,
+    duration: option<f64-or-string>,
     direction: option<playback-direction>,
     easing: option<string>,
   }
@@ -11603,7 +11611,7 @@ interface global {
     fill: option<fill-mode>,
     iteration-start: option<f64>,
     iterations: option<f64>,
-    duration: f64-or-string,
+    duration: option<f64-or-string>,
     direction: option<playback-direction>,
     easing: option<string>,
   }
@@ -11618,7 +11626,7 @@ interface global {
     fill: option<fill-mode>,
     iteration-start: option<f64>,
     iterations: option<f64>,
-    duration: f64-or-string,
+    duration: option<f64-or-string>,
     direction: option<playback-direction>,
     easing: option<string>,
   }
@@ -11663,7 +11671,7 @@ interface global {
     video-track(borrow<video-track>),
   }
   record track-event-init {
-    track: audio-track-or-text-track-or-video-track,
+    track: option<audio-track-or-text-track-or-video-track>,
     bubbles: option<bool>,
     cancelable: option<bool>,
     composed: option<bool>,
@@ -12030,7 +12038,7 @@ interface global {
     data: any,
     origin: option<string>,
     last-event-id: option<string>,
-    source: client-or-message-port-or-service-worker,
+    source: option<client-or-message-port-or-service-worker>,
     ports: option<list<borrow<message-port>>>,
     bubbles: option<bool>,
     cancelable: option<bool>,
@@ -13168,7 +13176,7 @@ interface global {
     fill: option<fill-mode>,
     iteration-start: option<f64>,
     iterations: option<f64>,
-    duration: f64-or-string,
+    duration: option<f64-or-string>,
     direction: option<playback-direction>,
     easing: option<string>,
   }
@@ -13273,8 +13281,8 @@ interface global {
     capture: option<bool>,
   }
   resource event-target {
-    add-event-listener: func(%type: string, listener: borrow<event-listener>, options: add-event-listener-options-or-bool, wants-untrusted: option<bool>);
-    remove-event-listener: func(%type: string, listener: borrow<event-listener>, options: bool-or-event-listener-options);
+    add-event-listener: func(%type: string, listener: borrow<event-listener>, options: option<add-event-listener-options-or-bool>, wants-untrusted: option<bool>);
+    remove-event-listener: func(%type: string, listener: borrow<event-listener>, options: option<bool-or-event-listener-options>);
     dispatch-event: func(event: borrow<event>) -> bool;
   }
   variant add-event-listener-options-or-bool {
@@ -13291,7 +13299,7 @@ interface global {
   }
   record push-subscription-options-init {
     user-visible-only: option<bool>,
-    application-server-key: buffer-source-or-string,
+    application-server-key: option<buffer-source-or-string>,
   }
   resource push-manager-impl {
     subscribe: func(options: option<push-subscription-options-init>) -> push-subscription;
@@ -13548,8 +13556,8 @@ interface global {
     get-elements-by-tag-name-ns: func(namespace: string, local-name: string) -> html-collection;
     get-elements-by-class-name: func(class-names: string) -> html-collection;
     get-element-by-id: func(element-id: string) -> option<element>;
-    create-element: func(local-name: string, options: element-creation-options-or-string) -> element;
-    create-element-ns: func(namespace: string, qualified-name: string, options: element-creation-options-or-string) -> element;
+    create-element: func(local-name: string, options: option<element-creation-options-or-string>) -> element;
+    create-element-ns: func(namespace: string, qualified-name: string, options: option<element-creation-options-or-string>) -> element;
     create-document-fragment: func() -> document-fragment;
     create-text-node: func(data: string) -> text;
     create-comment: func(data: string) -> comment;
@@ -13936,4 +13944,115 @@ interface global {
   get-worker-global-scope: func() -> worker-global-scope;
   get-dedicated-worker-global-scope: func() -> dedicated-worker-global-scope;
   get-window: func() -> window;
+
+
+
+
+
+  record define-element-options {
+    superclass: option<string>,
+    observed-attributes: list<string>,
+    form-associated: bool,
+  }
+  // record define-element-result {
+  //   // constructor: option<??>,
+  //   connected-callback: element-connected-callback,
+  //   // disconnected-callback: option<??>,
+  //   // adopted-callback: option<??>,
+  //   // attribute-changed-callback: option<??>,
+  // }
+  // resource element-connected-callback {
+  //   subscribe: func() -> pollable;
+  //   get: func() -> option<html-element>;
+  // }
+  resource define-element-result {
+    constructor-subscribe: func() -> pollable;
+    constructor-get: func() -> option<created-element>;
+  }
+  resource created-element {
+    connected-callback-subscribe: func() -> pollable;
+    disconnected-callback-subscribe: func() -> pollable;
+    adopted-callback-subscribe: func() -> pollable;
+    attribute-changed-callback-subscribe: func() -> pollable;
+    attribute-changed-callback-get: func() -> option<attribute-changed>;
+    get-element: func() -> html-element;
+  }
+  record attribute-changed {
+    name: string,
+    old-value: option<string>,
+    new-value: option<string>,
+    namespace-URL: option<string>,
+  }
+  // define-element: func(name: string, options: define-element-options) -> define-element-result;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // // hand written
+  // resource window {
+  //   document: func() -> document;
+  //   make-custom-element: func(name: string, options: make-custom-element-options);
+  // }
+  // record make-custom-element-options {
+  //   superclass: option<string>,
+  //   observed-attributes: list<string>,
+  //   // constructor: option<??>,
+  //   connected-callback: option<borrow<connected-callback>>,
+  //   // disconnected-callback: option<??>,
+  //   // adopted-callback: option<??>,
+  //   // attribute-changed-callback: option<??>,
+  // }
+  // resource connected-callback {
+  //   constructor();
+  //   subscribe: func() -> pollable;
+  // }
+
+
+
+  // resource window {
+  //   document: func() -> document;
+  //   // custom-elements: func() -> custom-element-registry;
+  //   define-element: func(name: string, options: define-element-options) -> define-element-result;
+  // }
+  // resource function {
+  // }
+  // resource custom-element-registry {
+  //   define: func(name: string, function-constructor: borrow<function>, options: option<element-definition-options>);
+  //   // set-element-creation-callback: func(name: string, callback: borrow<custom-element-creation-callback>);
+  //   // get: func(name: string) -> any;
+  //   // when-defined: func(name: string);
+  //   // upgrade: func(root: borrow<node>);
+  // }
+
+  // record element-definition-options {
+  //   extends: option<string>,
+  // }
+  // record define-element-options {
+  //   superclass: option<string>,
+  //   observed-attributes: list<string>,
+  //   form-associated: bool,
+  // }
+  // record define-element-result {
+  //   // constructor: option<??>,
+  //   connected-callback: element-connected-callback,
+  //   // disconnected-callback: option<??>,
+  //   // adopted-callback: option<??>,
+  //   // attribute-changed-callback: option<??>,
+  // }
+  // resource element-connected-callback {
+  //   subscribe: func() -> pollable;
+  //   get: func() -> option<html-element>;
+  // }
 }

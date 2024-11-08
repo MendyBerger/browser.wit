@@ -1,97 +1,78 @@
-const INNER = Symbol("inner");
-const IS_PROXY = Symbol("isProxy");
+import { Pollable } from "./poll.js"
 
-function reMap(name) {
-    const map = {
-        "HtmlElement": "HTMLElement",
-    }
-    return map[name] || name;
-}
-
-export const global = proxy(window);
-window.getWindow = function() {return proxy(window)};
-
-function proxy(target, fake = {}) {
-    let origTarget = target;
-    return new Proxy(fake, {
-        get: function (target, prop, receiver) {
-            prop = reMap(prop);
-
-            if (prop === INNER) {
-                return origTarget
-            }
-            if (prop === IS_PROXY) {
-                return true
-            }
-
-            if (prop.toString().startsWith("as")) {
-                return function () {
-                    return this
+var idlProxy;
+globalThisIdlProxy()
+function globalThisIdlProxy () {
+    if (idlProxy) return idlProxy;
+    const innerSymbol = Symbol('inner');
+    const isProxySymbol = Symbol('isProxy');
+    const uppercaseRegex = /html|Html|dom|Dom|Css|Svg|Url|Vtt|Cdata/g;
+    const globalNames = ['Window', 'WorkerGlobalScope'];
+    function proxy(target, fake = {}) {
+        const origTarget = target;
+        return new Proxy(fake, {
+            get: (_, prop, receiver) => {
+                if (prop === innerSymbol) return origTarget;
+                if (prop === isProxySymbol) return true;
+                if (typeof prop !== 'string') return maybeProxy(Reflect.get(origTarget, prop));
+                if (origTarget === globalThis && prop.startsWith('get') && globalNames.includes(prop.slice(3))) {
+                    return () => receiver;
                 }
-            }
-
-            let res = Reflect.get(origTarget, prop);
-            return maybeProxy(res);
-        },
-        apply: (target, thisArg, args) => {
-            let res = Reflect.apply(origTarget, proxyInner(thisArg), args.map(a =>  a[IS_PROXY] ? proxyInner(a) : a));
-            if (typeof res === "object" ) {
-                return proxy(res)
-            } else {
-                return res;
-            }
-        },
-        getPrototypeOf: (target) => {
-            return Reflect.getPrototypeOf(origTarget);
-        },
-        construct(target, argArray, newTarget) {
-            return maybeProxy(Reflect.construct(origTarget, argArray, newTarget));
-        },
-        defineProperty(target, property, attributes) {
-            return maybeProxy(Reflect.defineProperty(origTarget, property, attributes));
-        },
-        deleteProperty(target, p) {
-            return maybeProxy(Reflect.deleteProperty(origTarget, p));
-        },
-        getOwnPropertyDescriptor(target, p) {
-            return (Reflect.getOwnPropertyDescriptor(origTarget, p));
-        },
-        has(target, p) {
-            return maybeProxy(Reflect.has(origTarget, p));
-        },
-        isExtensible(target) {
-            return maybeProxy(Reflect.isExtensible(origTarget));
-        },
-        ownKeys(target) {
-            return maybeProxy(Reflect.ownKeys(origTarget));
-        },
-        preventExtensions(target) {
-            return maybeProxy(Reflect.preventExtensions(origTarget));
-        },
-        set(target, p, newValue, receiver) {
-            return maybeProxy(Reflect.set(origTarget, p, newValue, receiver));
-        },
-        setPrototypeOf(target, v) {
-            return maybeProxy(Reflect.setPrototypeOf(origTarget, v));
-        },
-    });
-}
-
-function maybeProxy(res) {
-    if (typeof res === "function") {
-        return proxy(res, function() {});
-    } else if (typeof res === "object" && res !== null) {
-        return () => {
-            return proxy(res)
-        }
-    } else {
+                prop = prop.replaceAll(uppercaseRegex, x => x.toUpperCase());
+                if (prop.startsWith('set') && origTarget[prop] === undefined) return val => Reflect.set(origTarget, `${prop[3].toLowerCase()}${prop.slice(4)}`, val);
+                if (prop.startsWith('as')) return () => receiver;
+                if (prop.startsWith('on') && prop.endsWith("Subscribe")) {
+                    let eventName = prop.slice(2, -9);
+                    return maybeProxy(() => {
+                        const pollable = new Pollable();
+                        origTarget.addEventListener(eventName, () => {
+                            pollable.resolve();
+                        });
+                        return pollable;
+                    })
+                };
+                const res = Reflect.get(origTarget, prop);
+                if (res === undefined && prop[0].toUpperCase() === prop[0]) {
+                    const propValue = globalThis[`${prop[0].toLowerCase()}${prop.slice(1)}`];
+                    if (propValue)
+                        return Object.getPrototypeOf(propValue).constructor;
+                    // return Object.getPrototypeOf(globalThis[prop]);
+                }
+                return maybeProxy(res);
+            },
+            apply: (_, thisArg, args) => {
+                if (args.length === 1 && Array.isArray(args[0]) && origTarget.length === 0) args = args[0];
+                const res = Reflect.apply(origTarget, proxyInner(thisArg), args.map(a =>  (a && a[isProxySymbol]) ? proxyInner(a) : a));
+                return typeof res === 'object' ? proxy(res) : res;
+            },
+            getPrototypeOf: _ => {
+                return Reflect.getPrototypeOf(origTarget)
+            },
+            construct: (_, argArray, newTarget) => {
+                return maybeProxy(Reflect.construct(origTarget, argArray, newTarget))
+            },
+            defineProperty: (_, property, attributes) => maybeProxy(Reflect.defineProperty(origTarget, property, attributes)),
+            deleteProperty: (_, p) => maybeProxy(Reflect.deleteProperty(origTarget, p)),
+            getOwnPropertyDescriptor: (_, p) => {
+                return Reflect.getOwnPropertyDescriptor(origTarget, p)
+            },
+            has: (_, p) => maybeProxy(Reflect.has(origTarget, p)),
+            isExtensible: (_) => maybeProxy(Reflect.isExtensible(origTarget)),
+            ownKeys: _ => maybeProxy(Reflect.ownKeys(origTarget)),
+            preventExtensions: _ => maybeProxy(Reflect.preventExtensions(origTarget)),
+            set: (_, p, newValue, receiver) => maybeProxy(Reflect.set(origTarget, p, newValue, receiver)),
+            setPrototypeOf: (_, v) => maybeProxy(Reflect.setPrototypeOf(origTarget, v)),
+        });
+    }
+    function maybeProxy(res) {
+        if (typeof res === 'function')
+            return proxy(res, () => {});
+        if (typeof res === 'object' && res !== null)
+            return () => proxy(res);
         return res;
     }
-}
+    const proxyInner = proxy => proxy ? proxy[innerSymbol] : proxy;
+    return (idlProxy = proxy(globalThis));
+};
 
-function proxyInner(proxy) {
-    if (proxy)
-        return proxy[INNER];
-    else
-        return proxy;
-}
+export {idlProxy};

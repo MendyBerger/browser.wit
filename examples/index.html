@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<script>
+    window.DefineElementResult = class DefineElementResult {
+        #constructedQueue = [];
+        constructor(name, options) {
+            this.constructorPollable = new Pollable();
+
+            let this_ = this;
+    
+            customElements.define(name, class extends HTMLElement {
+                static observedAttributes = options.observedAttributes ?? [];
+                static formAssociated = options.formAssociated;
+                #connectedCallbackResolve;
+                #disconnectedCallbackResolve;
+                #adoptedCallbackResolve;
+                #attributeChangedCallbackResolve;
+                attributeChangedCallbackData;
+                constructor() {
+                    super();
+                    const createdElement = new CreatedElement;
+                    
+                    createdElement.element = this;
+
+                    createdElement.connectedCallbackPollable = new Pollable();
+                    this.#connectedCallbackResolve = () => createdElement.connectedCallbackPollable.resolve();
+
+                    createdElement.disconnectedCallbackPollable = new Pollable();
+                    this.#disconnectedCallbackResolve = () => createdElement.disconnectedCallbackPollable.resolve();
+
+                    createdElement.adoptedCallbackPollable = new Pollable();
+                    this.#adoptedCallbackResolve = () => createdElement.adoptedCallbackPollable.resolve();
+
+                    createdElement.attributeChangedCallbackPollable = new Pollable();
+                    this.#attributeChangedCallbackResolve = () => createdElement.attributeChangedCallbackPollable.resolve();
+
+                    this_.#constructedQueue.push(createdElement);
+                    this_.constructorPollable.resolve();
+                }
+                connectedCallback() {
+                    this.#connectedCallbackResolve();
+                }
+                disconnectedCallback() {
+                    this.#disconnectedCallbackResolve();
+                }
+                adoptedCallback() {
+                    this.#adoptedCallbackResolve();
+                }
+                attributeChangedCallback(name, oldValue, newValue, namespaceUri) {
+                    this.attributeChangedCallbackData = { name, oldValue, newValue, namespaceUri };
+                    this.#attributeChangedCallbackResolve();
+                }
+            });
+        }
+        constructorSubscribe() {
+            return this.constructorPollable;
+        }
+        constructorGet() {
+            return this.#constructedQueue.shift();
+        }
+    };
+
+    window.CreatedElement = class CreatedElement {
+        element;
+        connectedCallbackPollable;
+        disconnectedCallbackPollable;
+        adoptedCallbackPollable;
+        attributeChangedCallbackPollable;
+        getElement() {
+            return this.element;
+        }
+        connectedCallbackSubscribe() {
+            return this.connectedCallbackPollable;
+        }
+        disconnectedCallbackSubscribe() {
+            return this.disconnectedCallbackPollable;
+        }
+        adoptedCallbackSubscribe() {
+            return this.adoptedCallbackPollable;
+        }
+        attributeChangedCallbackSubscribe() {
+            return this.attributeChangedCallbackPollable;
+        }
+        attributeChangedCallbackGet() {
+            const val = this.element.attributeChangedCallbackData;
+            this.element.attributeChangedCallbackData = undefined;
+            return val;
+        }
+    };
+
+    window.defineElement = function(name, options) {
+        return new DefineElementResult(name, options);
+    }
+
+    window.console.print = function(s) {
+        console.log(s);
+    }
+</script>
+
+<script type="module">
+    import { start as startRust } from './rust-web-component/static/basic-component.js';
+    import { start as startPython } from './python-web-component/static/app.js';
+    startRust();
+    startPython();
+</script>
+
+<collapsible-component summary="Click me!">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae quia possimus esse soluta, nemo, sunt eos tempora quidem nulla fuga aspernatur? Sequi recusandae, aspernatur dolorum rem modi hic nam? Nobis.
+</collapsible-component>
+
+<progress-bar percent="25"></progress-bar>

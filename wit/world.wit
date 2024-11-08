@@ -1,4 +1,4 @@
-package webidl:browser;
+package web:browser;
 
 world browser {
     include window;
