@@ -1,4 +1,4 @@
-package webidl:browser;
+package webidl-temp:browser;
 
 world browser {
     include window;

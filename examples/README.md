@@ -22,7 +22,7 @@ cargo install wasm-tools
 cd examples/rust-[example]
 cargo build --release --target wasm32-unknown-unknown
 wasm-tools component new ./target/wasm32-unknown-unknown/release/[example].wasm -o ./target/[example]-component.wasm
-jco transpile ./target/[example]-component.wasm -o static --map 'webidl:browser/global=../../imports.js#global'
+jco transpile --async-mode asyncify --default-async-imports --default-async-exports --no-nodejs-compat ./target/[example]-component.wasm -o static --map 'webidl-temp:browser/global=../../imports.js#idlProxy' --map 'wasi:io/poll=../../poll.js#poll' --async-exports "start"
 ```
 
 ### Server the example

@@ -15,7 +15,8 @@ fn main() {
     let wit_ast = webidl2wit::webidl_to_wit(
         webidl_ast,
         webidl2wit::ConversionOptions {
-            package_name: PackageName::new("web", "browser", None),
+            // TODO: remove "-temp" once the jco proxy is updated with pollables
+            package_name: PackageName::new("webidl-temp", "browser", None),
             interface_name: "global".to_string(),
             unsupported_features: webidl2wit::HandleUnsupported::Warn,
             phantom_interface: [
