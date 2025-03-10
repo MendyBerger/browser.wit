@@ -31,8 +31,9 @@ wasm-tools component new ./target/wasm32-unknown-unknown/release/[example].wasm 
 ```
 
 ## Make the Component Browser Ready
+<!-- TODO: remove `--map` for pollable and webidl once jco has working built in pollable and webidl support. -->
 ```shell
-jco transpile --async-mode asyncify --default-async-imports --default-async-exports --no-nodejs-compat ./component.wasm -o static --map 'webidl-temp:browser/global=../../imports.js#idlProxy' --map 'wasi:io/poll=../../poll.js#poll' --async-exports "start"
+jco transpile --async-mode jspi --no-nodejs-compat ./component.wasm -o static --async-exports "start" --async-wasi-imports --async-wasi-exports --map 'wasi:io/poll=../../poll.js#poll' --map 'webidl:browser/global=../../webidl.js#idlProxy'
 ```
 
 ## Serve the example

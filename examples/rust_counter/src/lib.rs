@@ -8,7 +8,7 @@ wit_bindgen::generate!({
     },
 });
 
-use crate::webidl_temp::browser::global;
+use crate::webidl::browser::global;
 
 struct MyComponent;
 
