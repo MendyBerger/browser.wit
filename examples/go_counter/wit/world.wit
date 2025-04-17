@@ -1,0 +1,6 @@
+package go-example-namespace:go-example-package@1.0.0;
+
+world go-example-world {
+    include wasi:cli/imports@0.2.2;
+    include webidl:browser/browser;
+}

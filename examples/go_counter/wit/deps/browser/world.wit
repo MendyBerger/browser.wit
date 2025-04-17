@@ -1,0 +1,6 @@
+package webidl:browser;
+
+world browser {
+    include window;
+    export start: func();
+}

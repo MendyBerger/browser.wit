@@ -1,0 +1,2 @@
+cli = "https://github.com/WebAssembly/wasi-cli/archive/38bd8f73b53417d876d0791d3eef18ae87a74cad.tar.gz"
+browser = "../../../wit"
