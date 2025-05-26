@@ -35,6 +35,9 @@ wasm-tools component new ./target/wasm32-unknown-unknown/release/[example].wasm 
 ```
 
 ### Go
+
+Install [tiny-go](https://tinygo.org/)
+
 Generate types from wit
 ```shell
 go get go.bytecodealliance.org/cmd/wit-bindgen-go
