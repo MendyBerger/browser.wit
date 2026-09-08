@@ -9,5 +9,7 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-wit-bindgen = "0.28.0"
-wasi = "0.13.3+wasi-0.2.2"
+# `futures-stream` gives `StreamReader::into_stream`, so the two click streams can be
+# merged with `futures_util::stream::select`.
+wit-bindgen = { version = "0.61.1", features = ["futures-stream"] }
+futures-util = { version = "0.3", default-features = false, features = ["alloc"] }
