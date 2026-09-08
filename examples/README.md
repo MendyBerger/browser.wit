@@ -8,16 +8,30 @@ cargo install wasm-tools
 ```
 
 #### install jco
+Version 1.32 or newer, for WASI 0.3 support.
 ```shell
-npm install -g @bytecodealliance/jco
+npm install -g @bytecodealliance/jco@latest
 ```
 
-## Available Rust examples
+## Available examples
 - rust_counter
-- go_counter
-- python_counter
-- dotnet_counter
-- moonbit_counter
+
+The go, python, dotnet and moonbit examples are not ported to the WASI 0.3 interfaces
+yet. They still poll `wasi:io` pollables, which the generated wit no longer has, and
+their toolchains do not support component model async streams. Their instructions below
+are kept for when they can be brought back.
+
+## How the browser apis look now
+
+Two shapes changed with WASI 0.3:
+
+- An event handler attribute is a stream of events. `element.onclick()` hands back a
+  `stream<event>` to read from, in place of the old `onclick-subscribe` pollable.
+- A method that returned a `Promise` in WebIDL is an `async func`, so it is awaited in
+  the guest language rather than blocking.
+
+The world's `start` is an `async func` too, which is what lets a guest await those
+streams directly instead of driving a poll loop.
 
 
 ## Compile Example to Component
@@ -86,9 +100,11 @@ wasm-tools component new target/gen.wasm -o component.wasm
 ```
 
 ## Make the Component Browser Ready
-<!-- TODO: remove `--map` for pollable and webidl once jco has working built in pollable and webidl support. -->
+<!-- TODO: remove `--map` for webidl once jco has working built in webidl support. -->
+The component imports nothing but `webidl:browser/global`, so the only mapping left is
+the one pointing at the browser glue.
 ```shell
-jco transpile --async-mode jspi --no-nodejs-compat ./component.wasm -o static --async-exports "start" --async-wasi-imports --async-wasi-exports --map 'wasi:io/poll=../../poll.js#poll' --map 'webidl:browser/global=../../webidl.js#idlProxy' --map 'wasi:filesystem/*=https://cdn.jsdelivr.net/npm/@bytecodealliance/preview2-shim/lib/browser/filesystem.js#*' --map 'wasi:clocks/*=https://cdn.jsdelivr.net/npm/@bytecodealliance/preview2-shim/lib/browser/clocks.js#*' --map 'wasi:io/*=https://cdn.jsdelivr.net/npm/@bytecodealliance/preview2-shim/lib/browser/io.js#*' --map 'wasi:random/*=https://cdn.jsdelivr.net/npm/@bytecodealliance/preview2-shim/lib/browser/random.js#*' --map 'wasi:cli/*=https://cdn.jsdelivr.net/npm/@bytecodealliance/preview2-shim/lib/browser/cli.js#*' --map 'wasi:sockets/*=https://cdn.jsdelivr.net/npm/@bytecodealliance/preview2-shim/lib/browser/sockets.js#*'
+jco transpile --no-nodejs-compat ./component.wasm -o static --map 'webidl:browser/global=../../webidl.js#idlProxy'
 ```
 
 ## Serve the example
